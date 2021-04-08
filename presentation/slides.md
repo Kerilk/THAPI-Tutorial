@@ -204,7 +204,19 @@ Post mortem analysis of traces (and inputs?) of HPC applications can be used to 
     - In order of \~2us second / event reading
 
 
-## THAPI is a Collection of Tracers
+# THAPI is a Collection of Tracers
+
+### THAPI Consist in 2 bigs components
+
+  * The tracing of events
+    - For each runtime calls, dump their arguments
+    - Done via LD_PRELAD and LTTng
+  * The parsing of the trace 
+    - Generate a summary, a pretty print, information for data-simulation...
+    - Done via `babeltrace`
+
+  By default the trace are dumped into disks.
+
 
 ### Use low level tracing: Linux Tracing Toolkit Next Generation (LTTng):
 
@@ -218,6 +230,13 @@ Post mortem analysis of traces (and inputs?) of HPC applications can be used to 
  * Level Zero 
  * Cuda (WIP)
 
+### Babeltrace
+
+```
+Babeltrace 2 is the reference parser implementation of the Common Trace Format (CTF), a very versatile trace format followed by various tracers and tools such as LTTng and barectf. The Babeltrace 2 CLI,library and its Python bindings can read and write CTF traces. 
+```
+
+
 Open source at: https://xgitlab.cels.anl.gov/heteroflow/tracer
 
 ## Example
@@ -230,8 +249,7 @@ Open source at: https://xgitlab.cels.anl.gov/heteroflow/tracer
 #include <sycl.hpp>
 
 int main() {
-  sycl::default_selector selector;
-  sycl::queue myQueue(selector);
+  sycl::queue Q;
   myQueue.submit([&](sycl::handler &cgh) {
     sycl::stream sout(1024, 256, cgh);
     cgh.single_task<class hello_world>([=]() {
@@ -268,10 +286,12 @@ cl_arguments:kernel_info: kernel: 0x24ed170,
                           function_name: "_ZTSZZ4mainENK3$_0clERN2cl4sycl7handlerEE11hello_world",
                           num_args: 9, context: 0x2522780, program: 0x24ed980, attibutes: ""
 cl:clCreateKernel_stop: kernel: 0x24ed170, errcode_ret_val: CL_SUCCESS
+[...]
 ```
 \normalsize
 
 ## Example Tool: iprof
+
 \tiny
 ```
 $iprof ./a.out
@@ -314,7 +334,7 @@ zeCommandListAppendMemoryCopy | 400.00B |  50.00% |     1 | 400.00B | 400.00B | 
 # HPC Centric
 
  * Can mix backend in same apps
- * Event are configurable to lower overhead
+ * Traced Event are configurable to adjust overhead
 
 ```
           Name |     Time | Time(%) |   Calls |  Average |      Min |      Max |
@@ -323,7 +343,6 @@ clSetKernelArg |    3.82s |  20.40% | 6607872 | 578.00ns | 335.00ns |  45.94us |
          Total |   18.75s | 100.00% | 8147809 |
 ```
 
- * Mutlithread / Multiprocess have first class support
 
 # Conclusion and Future Work
 
