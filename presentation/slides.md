@@ -204,7 +204,7 @@ Post mortem analysis of traces (and inputs?) of HPC applications can be used to 
     - In order of \~2us second / event reading
 
 
-# THAPI is a Collection of Tracers
+## THAPI is a Collection of Tracers
 
 ### THAPI Consist in 2 bigs components
 
@@ -331,7 +331,7 @@ zeCommandListAppendMemoryCopy | 400.00B |  50.00% |     1 | 400.00B | 400.00B | 
 ``` 
 \normalsize
 
-# HPC Centric
+## HPC Centric
 
  * Can mix backend in same apps
  * Traced Event are configurable to adjust overhead
