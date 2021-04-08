@@ -1,11 +1,11 @@
 ---
-title: 'Model-Centric Tracing of Low-Level HPC APIs'
+title: 'Tracing Heterogeneous APIs (OpenCL, L0, CUDA) in a nutshell: billions of events with low overhead'
 author:
-- \textbf{Brice Videau}
+- Brice Videau
 - Thomas Applencourt
 institute:
 - Argonne National Laboratory
-date: 10th September 2020
+date: 14th April 2021
 theme: Warsaw
 header-includes:
 - |
@@ -189,6 +189,21 @@ Post mortem analysis of traces (and inputs?) of HPC applications can be used to 
 
 # THAPI: Tracing Heterogeneous APIs
 
+## THAPI GOALS
+
+  * Programing-Model centric tracing
+    - For each events, all the arguments are saved. 
+    - Semantic preserved
+  * Flexible 
+    - Fine granualarity, you can enable/disable individual events tracing.
+    - Trace can be read pragmaticaly plugins (C, Python, Ruby)
+    - We provide tools calibrated to our needs as starting-blocks. 
+
+  * Low/Raisonable overhead
+    - In order of \~0.2us / event for 
+    - In order of \~2us second / event reading
+
+
 ## THAPI is a Collection of Tracers
 
 ### Use low level tracing: Linux Tracing Toolkit Next Generation (LTTng):
@@ -199,8 +214,8 @@ Post mortem analysis of traces (and inputs?) of HPC applications can be used to 
 
 ### Supported APIs
 
- * OpenCL (Full)
- * Level Zero (Full API trace, profiling WIP)
+ * OpenCL
+ * Level Zero 
  * Cuda (WIP)
 
 Open source at: https://xgitlab.cels.anl.gov/heteroflow/tracer
@@ -256,42 +271,59 @@ cl:clCreateKernel_stop: kernel: 0x24ed170, errcode_ret_val: CL_SUCCESS
 ```
 \normalsize
 
-## Example Tool: clprof
+## Example Tool: iprof
 \tiny
 ```
-API calls | 1 Hostnames | 1 Processes | 1 Threads
-                     Name |     Time | Time(%) | Calls |  Average |      Min |      Max | 
-           clBuildProgram | 219.26ms |  99.08% |     1 | 219.26ms | 219.26ms | 219.26ms | 
-   clEnqueueNDRangeKernel |   1.44ms |   0.65% |     1 |   1.44ms |   1.44ms |   1.44ms | 
-      clEnqueueReadBuffer | 370.14us |   0.17% |     1 | 370.14us | 370.14us | 370.14us | 
-                 clFinish | 149.72us |   0.07% |     1 | 149.72us | 149.72us | 149.72us | 
-           clGetDeviceIDs |  22.90us |   0.01% |     2 |  11.45us |   1.44us |  21.46us | 
-           clCreateBuffer |   7.68us |   0.00% |     1 |   7.68us |   7.68us |   7.68us | 
-          clReleaseKernel |   6.86us |   0.00% |     1 |   6.86us |   6.86us |   6.86us | 
-           clCreateKernel |   6.60us |   0.00% |     1 |   6.60us |   6.60us |   6.60us | 
-          clCreateContext |   6.27us |   0.00% |     1 |   6.27us |   6.27us |   6.27us | 
-         clGetPlatformIDs |   4.15us |   0.00% |     2 |   2.07us | 251.00ns |   3.90us | 
-           clSetKernelArg |   4.01us |   0.00% |     2 |   2.00us | 544.00ns |   3.46us | 
-        clGetPlatformInfo |   3.21us |   0.00% |     1 |   3.21us |   3.21us |   3.21us | 
-clCreateProgramWithSource |   2.29us |   0.00% |     1 |   2.29us |   2.29us |   2.29us | 
-     clCreateCommandQueue |   1.71us |   0.00% |     1 |   1.71us |   1.71us |   1.71us | 
-    clReleaseCommandQueue |   1.32us |   0.00% |     1 |   1.32us |   1.32us |   1.32us | 
-         clReleaseContext |   1.01us |   0.00% |     1 |   1.01us |   1.01us |   1.01us | 
-         clReleaseProgram | 737.00ns |   0.00% |     1 | 737.00ns | 737.00ns | 737.00ns | 
-          clGetDeviceInfo | 712.00ns |   0.00% |     1 | 712.00ns | 712.00ns | 712.00ns | 
-                    Total | 221.29ms | 100.00% |    21 | 
+$iprof ./a.out
+[...]
+Trace location: /home/tapplencourt/lttng-traces/iprof-20210408-204629
 
-Device profiling | 1 Hostnames | 1 Processes | 1 Threads | 1 Devices
-               Name |    Time | Time(%) | Calls | Average |     Min |     Max | 
-        hello_world | 18.54us |  59.04% |     1 | 18.54us | 18.54us | 18.54us | 
-clEnqueueReadBuffer | 12.86us |  40.96% |     1 | 12.86us | 12.86us | 12.86us | 
-              Total | 31.41us | 100.00% |     2 | 
+== Level0 ==
+API calls | 1 Hostnames | 1 Processes | 1 Threads
+
+                                  Name |     Time | Time(%) | Calls |  Average |      Min |      Max | Failed |
+                        zeModuleCreate | 119.15ms |  91.68% |     1 | 119.15ms | 119.15ms | 119.15ms |      0 |
+     zeCommandQueueExecuteCommandLists |   6.94ms |   5.34% |     2 |   3.47ms |   2.29ms |   4.65ms |      0 |
+         zeCommandListAppendMemoryCopy |   1.22ms |   0.94% |     1 |   1.22ms |   1.22ms |   1.22ms |      0 |
+                   zeCommandListCreate | 741.99us |   0.57% |     2 | 371.00us | 355.94us | 386.05us |      0 |
+                      zeMemAllocDevice | 610.28us |   0.47% |     1 | 610.28us | 610.28us | 610.28us |      0 |
+          zeCommandListCreateImmediate | 344.82us |   0.27% |     1 | 344.82us | 344.82us | 344.82us |      0 |
+                  zeCommandQueueCreate | 214.52us |   0.17% |     1 | 214.52us | 214.52us | 214.52us |      0 |
+                zeEventHostSynchronize | 180.92us |   0.14% |     3 |  60.31us | 272.00ns | 180.20us |      0 |
+                  zeCommandListDestroy | 100.67us |   0.08% |     3 |  33.56us |  21.50us |  57.36us |      0 |
+                         zeFenceCreate |  82.36us |   0.06% |     2 |  41.18us |  40.46us |  41.90us |      0 |
+                         zeEventCreate |  73.89us |   0.06% |     2 |  36.95us |   3.92us |  69.97us |      0 |
+                                 Total | 129.97ms | 100.00% |   123 |                                       3 |
+
+Device profiling | 1 Hostnames | 1 Processes | 1 Threads | 1 Device pointers
+
+                         Name |    Time | Time(%) | Calls | Average |     Min |     Max |
+zeCommandListAppendMemoryCopy | 23.04us |  50.53% |     1 | 23.04us | 23.04us | 23.04us |
+                  hello_world | 22.56us |  49.47% |     1 | 22.56us | 22.56us | 22.56us |
+                        Total | 45.60us | 100.00% |     2 |
+
 Explicit memory trafic | 1 Hostnames | 1 Processes | 1 Threads
-               Name |   Byte | Byte(%) | Calls | Average |    Min |    Max | 
-clEnqueueReadBuffer | 40.00B | 100.00% |     1 |  40.00B | 40.00B | 40.00B | 
-              Total | 40.00B | 100.00% |     1 | 
-```
+
+                         Name |    Byte | Byte(%) | Calls | Average |     Min |     Max |
+             zeMemAllocDevice | 400.00B |  50.00% |     1 | 400.00B | 400.00B | 400.00B |
+zeCommandListAppendMemoryCopy | 400.00B |  50.00% |     1 | 400.00B | 400.00B | 400.00B |
+                        Total | 800.00B | 100.00% |     2 |
+``` 
 \normalsize
+
+# HPC Centric
+
+ * Can mix backend in same apps
+ * Event are configurable to lower overhead
+
+```
+          Name |     Time | Time(%) |   Calls |  Average |      Min |      Max |
+clSetKernelArg |    3.82s |  20.40% | 6607872 | 578.00ns | 335.00ns |  45.94us |
+[...]
+         Total |   18.75s | 100.00% | 8147809 |
+```
+
+ * Mutlithread / Multiprocess have first class support
 
 # Conclusion and Future Work
 
@@ -311,9 +343,11 @@ Deployment strategies and use-cases on HPC infrastructures:
  * Lightweight monitoring for continuous usage,
  * Enabling full tracing of distributed applications,
  * Develop specialized trace analysis tools.
+ * Timeline support
+ * CUDA summary
 
 More tracers:
+ * ROCm / Hip
 
- * Finish CUDA tracer,
- * ROCm
- * OpenMP ?
+## Futur work
+
