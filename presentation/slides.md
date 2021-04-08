@@ -203,20 +203,20 @@ Post mortem analysis of traces (and inputs?) of HPC applications can be used to 
     - In order of \~0.2us / event for 
     - In order of \~2us second / event reading
 
+## THAPI Consist in 2 bigs components
 
-## THAPI is a Collection of Tracers
-
-### THAPI Consist in 2 bigs components
+Open source at: https://xgitlab.cels.anl.gov/heteroflow/tracer
 
   * The tracing of events
     - For each runtime calls, dump their arguments
-    - Done via LD_PRELAD and LTTng
+    - Done via `LTTng`
   * The parsing of the trace 
     - Generate a summary, a pretty print, information for data-simulation...
     - Done via `babeltrace`
 
   By default the trace are dumped into disks.
 
+## THAPI is a Collection of Tracers
 
 ### Use low level tracing: Linux Tracing Toolkit Next Generation (LTTng):
 
@@ -230,24 +230,30 @@ Post mortem analysis of traces (and inputs?) of HPC applications can be used to 
  * Level Zero 
  * Cuda (WIP)
 
-### Babeltrace
+## THAPI is a Collection of Plugins to parse you pluging
 
+> Babeltrace 2 is the reference parser implementation of the Common Trace Format (CTF), a very versatile trace format followed by various tracers and tools such as LTTng and barectf. The Babeltrace 2 CLI,library and its Python bindings can read and write CTF traces. 
+
+## HPC Centric
+
+ * Can mix backend in same apps
+ * Developed with Multiprocess / MultiThread / MultiGPU in mind
+ * Traced Event are configurable to adjust overhead
+\tiny
 ```
-Babeltrace 2 is the reference parser implementation of the Common Trace Format (CTF), a very versatile trace format followed by various tracers and tools such as LTTng and barectf. The Babeltrace 2 CLI,library and its Python bindings can read and write CTF traces. 
+          Name |     Time | Time(%) |   Calls |  Average |      Min |      Max |
+clSetKernelArg |    3.82s |  20.40% | 6607872 | 578.00ns | 335.00ns |  45.94us |
+[...]
+         Total |   18.75s | 100.00% | 8147809 |
 ```
+\normalsize
 
+## THAPI Examples
+Wrapping the API entry points to be able to reconstruct the context.
 
-Open source at: https://xgitlab.cels.anl.gov/heteroflow/tracer
-
-## Example
-
-* Wrapping the API entry points to be able to reconstruct the context.
-* SYCL example:
-
-\footnotesize
-```C++
+```c++
+> cat main.cpp
 #include <sycl.hpp>
-
 int main() {
   sycl::queue Q;
   myQueue.submit([&](sycl::handler &cgh) {
@@ -259,13 +265,13 @@ int main() {
   return 0;
 }
 ```
-\normalsize
 
-## OpenCL Tracing of SYCL
-* 69 OpenCL calls:
-
+## THAPI Examples: `trace_opencl.sh` & `babeltrace_cl.sh`
 \tiny
 ```babeltrace_opencl
+> dpcpp main.cpp && trace_opencl.sh ./a.out
+~/lttng/THAPI_OPENCL/
+> babeltrace_cl $LAST_TRACE 
 cl:clCreateProgramWithIL_start: context: 0x2522780, il: 0x461ec0, length: 41996,
                                 errcode_ret: 0x7ffd9763f8cc
 cl:clCreateProgramWithIL_stop: program: 0x24ed980, errcode_ret_val: CL_SUCCESS
@@ -290,59 +296,42 @@ cl:clCreateKernel_stop: kernel: 0x24ed170, errcode_ret_val: CL_SUCCESS
 ```
 \normalsize
 
-## Example Tool: iprof
+## THAPI Examples: iprof
 
 \tiny
 ```
 $iprof ./a.out
 [...]
 Trace location: /home/tapplencourt/lttng-traces/iprof-20210408-204629
-
-== Level0 ==
 API calls | 1 Hostnames | 1 Processes | 1 Threads
 
-                                  Name |     Time | Time(%) | Calls |  Average |      Min |      Max | Failed |
-                        zeModuleCreate | 119.15ms |  91.68% |     1 | 119.15ms | 119.15ms | 119.15ms |      0 |
-     zeCommandQueueExecuteCommandLists |   6.94ms |   5.34% |     2 |   3.47ms |   2.29ms |   4.65ms |      0 |
-         zeCommandListAppendMemoryCopy |   1.22ms |   0.94% |     1 |   1.22ms |   1.22ms |   1.22ms |      0 |
-                   zeCommandListCreate | 741.99us |   0.57% |     2 | 371.00us | 355.94us | 386.05us |      0 |
-                      zeMemAllocDevice | 610.28us |   0.47% |     1 | 610.28us | 610.28us | 610.28us |      0 |
-          zeCommandListCreateImmediate | 344.82us |   0.27% |     1 | 344.82us | 344.82us | 344.82us |      0 |
-                  zeCommandQueueCreate | 214.52us |   0.17% |     1 | 214.52us | 214.52us | 214.52us |      0 |
-                zeEventHostSynchronize | 180.92us |   0.14% |     3 |  60.31us | 272.00ns | 180.20us |      0 |
-                  zeCommandListDestroy | 100.67us |   0.08% |     3 |  33.56us |  21.50us |  57.36us |      0 |
-                         zeFenceCreate |  82.36us |   0.06% |     2 |  41.18us |  40.46us |  41.90us |      0 |
-                         zeEventCreate |  73.89us |   0.06% |     2 |  36.95us |   3.92us |  69.97us |      0 |
-                                 Total | 129.97ms | 100.00% |   123 |                                       3 |
+                                  Name |     Time | Time(%) | Calls |  Average |      Min |      Max |
+                        zeModuleCreate | 119.15ms |  91.68% |     1 | 119.15ms | 119.15ms | 119.15ms |
+     zeCommandQueueExecuteCommandLists |   6.94ms |   5.34% |     2 |   3.47ms |   2.29ms |   4.65ms |
+         zeCommandListAppendMemoryCopy |   1.22ms |   0.94% |     1 |   1.22ms |   1.22ms |   1.22ms |
+                   zeCommandListCreate | 741.99us |   0.57% |     2 | 371.00us | 355.94us | 386.05us |
+                      zeMemAllocDevice | 610.28us |   0.47% |     1 | 610.28us | 610.28us | 610.28us |
+          zeCommandListCreateImmediate | 344.82us |   0.27% |     1 | 344.82us | 344.82us | 344.82us |
+                  zeCommandQueueCreate | 214.52us |   0.17% |     1 | 214.52us | 214.52us | 214.52us |
+                zeEventHostSynchronize | 180.92us |   0.14% |     3 |  60.31us | 272.00ns | 180.20us |
+                  zeCommandListDestroy | 100.67us |   0.08% |     3 |  33.56us |  21.50us |  57.36us |
+                         zeFenceCreate |  82.36us |   0.06% |     2 |  41.18us |  40.46us |  41.90us |
+                         zeEventCreate |  73.89us |   0.06% |     2 |  36.95us |   3.92us |  69.97us |
+                                 Total | 129.97ms | 100.00% |   123 |                                 
 
 Device profiling | 1 Hostnames | 1 Processes | 1 Threads | 1 Device pointers
-
                          Name |    Time | Time(%) | Calls | Average |     Min |     Max |
 zeCommandListAppendMemoryCopy | 23.04us |  50.53% |     1 | 23.04us | 23.04us | 23.04us |
                   hello_world | 22.56us |  49.47% |     1 | 22.56us | 22.56us | 22.56us |
                         Total | 45.60us | 100.00% |     2 |
 
 Explicit memory trafic | 1 Hostnames | 1 Processes | 1 Threads
-
                          Name |    Byte | Byte(%) | Calls | Average |     Min |     Max |
              zeMemAllocDevice | 400.00B |  50.00% |     1 | 400.00B | 400.00B | 400.00B |
 zeCommandListAppendMemoryCopy | 400.00B |  50.00% |     1 | 400.00B | 400.00B | 400.00B |
                         Total | 800.00B | 100.00% |     2 |
 ``` 
 \normalsize
-
-## HPC Centric
-
- * Can mix backend in same apps
- * Traced Event are configurable to adjust overhead
-
-```
-          Name |     Time | Time(%) |   Calls |  Average |      Min |      Max |
-clSetKernelArg |    3.82s |  20.40% | 6607872 | 578.00ns | 335.00ns |  45.94us |
-[...]
-         Total |   18.75s | 100.00% | 8147809 |
-```
-
 
 # Conclusion and Future Work
 
