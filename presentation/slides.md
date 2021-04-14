@@ -91,6 +91,7 @@ heterogeneous computing is the norm.
    - CUDA
    - OpenCL
    - ROCm
+   - L0
  * Kokkos
    - OpenMP
    - CUDA
@@ -149,7 +150,7 @@ Low level programming models usually rely on APIs:
  * Injectable;
  * Usually task based, with clear dependencies;
  * State is reconstructible, on the fly or post-mortem;
- * Enables verification,
+ * Enables verification;
  * and modeling.
 
 ## Simulation
@@ -163,7 +164,7 @@ tasks allows for accurate simulation:
 
 ## High-level Programming Models Introspection
 
-Low level programming models are a window into high-level programming models:
+Low level programming models are windows into high-level programming models:
 
  * Debug high level programming models,
  * Optimization of high level programming model,
@@ -191,21 +192,19 @@ Post mortem analysis of traces (and inputs?) of HPC applications can be used to 
 
 ## THAPI GOALS
 
-  * Programing-Model centric tracing
-    - For each events, all the arguments are saved. 
-    - Semantic preserved
+  * Programming-Model centric tracing
+    - For each events, all the arguments are saved,
+    - Semantic preserved.
   * Flexible 
-    - Fine granualarity, you can enable/disable individual events tracing.
-    - Trace can be read pragmaticaly plugins (C, Python, Ruby)
+    - Fine granularity, you can enable/disable individual events tracing,
+    - Trace can be read programmatically (C, Python, Ruby),
     - We provide tools calibrated to our needs as starting-blocks. 
 
-  * Low/Raisonable overhead
-    - In order of \~0.2us / event for 
-    - In order of \~2us second / event reading
+  * Low/Reasonable overhead
 
 ## THAPI Consist in 2 bigs components
 
-Open source at: https://xgitlab.cels.anl.gov/heteroflow/tracer
+Open source at: https://github.com/argonne-lcf/THAPI
 
   * The tracing of events
     - For each runtime calls, dump their arguments
@@ -221,6 +220,7 @@ Open source at: https://xgitlab.cels.anl.gov/heteroflow/tracer
 ### Use low level tracing: Linux Tracing Toolkit Next Generation (LTTng):
 
  * Low Overhead
+    - In order of \~0.2µs per traced event
  * Binary format
  * Well maintained and established (used in industry leading data-centers)
 
@@ -228,13 +228,17 @@ Open source at: https://xgitlab.cels.anl.gov/heteroflow/tracer
 
  * OpenCL
  * Level Zero 
- * Cuda (WIP)
+ * CUDA (WIP)
 
 ## ...and a Collection of Tools to Parse your Traces
 
 ### Babeltrace 2
 
 > Babeltrace 2 is the reference parser implementation of the Common Trace Format (CTF), a very versatile trace format followed by various tracers and tools such as LTTng and barectf. The Babeltrace 2 CLI,library and its Python bindings can read and write CTF traces. 
+
+### Tools
+ * Summary, timeline (experimental), pretty printing
+ * Tools are developed in C, time to process an event is in order of \~2µs second per event
 
 ## THAPI Examples
 
@@ -258,16 +262,17 @@ END PROGRAM target_teams_distribute_parallel_do
 ```
 \normalsize
 
-## THAPI Examples: `trace_opencl.sh` & `babeltrace_cl.sh`
+## THAPI Examples: `tracer_opencl.sh` & `babeltrace_opencl`
 
 Wrapping the API entry points to be able to reconstruct the context.
 
 \tiny
 ```babeltrace_opencl
-> trace_opencl.sh ./target_teams_distribute_parallel_do # Using OpenCL backend
+> tracer_opencl.sh ./target_teams_distribute_parallel_do # Using OpenCL backend
 Traces will be output to /home/tapplencourt/lttng-traces/thapi-opencl-session-20210409-145006
 [...]
-> babeltrace_cl /home/tapplencourt/lttng-traces/thapi-opencl-session-20210409-145006
+> babeltrace_opencl /home/tapplencourt/lttng-traces/thapi-opencl-session-20210409-145006
+[...]
 cl:clCreateProgramWithIL_start: context: 0x2522780, il: 0x461ec0, length: 41996,
                                 errcode_ret: 0x7ffd9763f8cc
 cl:clCreateProgramWithIL_stop: program: 0x24ed980, errcode_ret_val: CL_SUCCESS
@@ -281,8 +286,7 @@ cl_build:infos_1_2: program: 0x24ed980, device: 0x24394c0,
 cl_build:infos_2_0: program: 0x24ed980, device: 0x24394c0,
                     build_global_variable_total_size: 0
 cl:clBuildProgram_stop: errcode_ret_val: CL_SUCCESS
-cl:clCreateKernel_start: program: 0x24ed980, kernel_name: 0x24ee890,
-                         errcode_ret: 0x7ffd9763fe64,
+cl:clCreateKernel_start: program: 0x24ed980, kernel_name: 0x24ee890, errcode_ret: 0x7ffd9763fe64,
                          kernel_name_val: "__omp_offloading_801_1a0d014_MAIN___l9"
 cl_arguments:kernel_info: kernel: 0x24ed170,
                           function_name: "__omp_offloading_801_1a0d014_MAIN___l9",
@@ -342,7 +346,7 @@ babeltrace2 ~/iprof-20210409-150449 |& grep ust_opencl | wc -l
 53
 ```
 
- * Developed with Multiprocess / MultiThread / MultiGPU in mind
+ * Developed with Multiprocess / Multithread / MultiGPU in mind
 
  ```
 iprof mpirun -n 2 ./a.out
