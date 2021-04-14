@@ -1,0 +1,262 @@
+Trace location: /home/tapplencourt/lttng-traces/iprof-20210414-184414
+
+18:44:15.041743171 - lttng_ust_opencl:clGetPlatformIDs_entry: num_entries: 0, platforms: 0x0, num_platforms: 0x7ffd833864cc
+18:44:15.041746380 - lttng_ust_opencl:clGetPlatformIDs_exit: errcode_ret_val: CL_SUCCESS, num_platforms_val: 2, platforms_vals: []
+18:44:15.041749165 - lttng_ust_opencl:clGetPlatformIDs_entry: num_entries: 2, platforms: 0x26076b0, num_platforms: 0x0
+18:44:15.041749901 - lttng_ust_opencl:clGetPlatformIDs_exit: errcode_ret_val: CL_SUCCESS, num_platforms_val: 0, platforms_vals: [0x2606588, 0x27642a0]
+18:44:15.041753256 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x2606588, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 0, devices: 0x0, num_devices: 0x7ffd8338633c
+18:44:15.041756611 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: []
+18:44:15.041757035 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x2606588, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 1, devices: 0x27e4c00, num_devices: 0x0
+18:44:15.041771383 - lttng_ust_opencl_devices:device_name: device: 0x26073c8, name: Intel(R) Xeon(R) CPU E3-1585 v5 @ 3.50GHz
+18:44:15.041780870 - lttng_ust_opencl_devices:device_timer: device: 0x26073c8, device_timestamp: 761478806407924, host_timestamp: 761478806407465
+18:44:15.041781126 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: [0x26073c8]
+18:44:15.041784290 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x27e4ec8, param_value_size_ret: 0x0
+18:44:15.041785400 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_CPU]
+18:44:15.041785735 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_PARENT_DEVICE, param_value_size: 8, param_value: 0x7ffd833861b8, param_value_size_ret: 0x0
+18:44:15.041786192 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x0
+18:44:15.041789507 - lttng_ust_opencl:clRetainDevice_entry: device: 0x26073c8
+18:44:15.041790542 - lttng_ust_opencl:clRetainDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.041791933 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x2606588, param_name: CL_PLATFORM_NAME, param_value_size: 0, param_value: 0x0, param_value_size_ret: 0x7ffd83386448
+18:44:15.041793046 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 16, param_value_vals: ""
+18:44:15.041793554 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x2606588, param_name: CL_PLATFORM_NAME, param_value_size: 16, param_value: 0x27e4c00, param_value_size_ret: 0x0
+18:44:15.041794232 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 16, param_value_vals: Intel(R) OpenCL
+18:44:15.041795538 - lttng_ust_opencl:clReleaseDevice_entry: device: 0x26073c8
+18:44:15.041796442 - lttng_ust_opencl:clReleaseDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.041797264 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x27642a0, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 0, devices: 0x0, num_devices: 0x7ffd8338633c
+18:44:15.041798424 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: []
+18:44:15.041798719 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x27642a0, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 1, devices: 0x27e4bc0, num_devices: 0x0
+18:44:15.041799918 - lttng_ust_opencl_devices:device_name: device: 0x2764370, name: Intel(R) Iris(TM) Pro Graphics P580 [0x193a]
+18:44:15.041807681 - lttng_ust_opencl_devices:device_timer: device: 0x2764370, device_timestamp: 3333677296017, host_timestamp: 761481842564986
+18:44:15.041807876 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: [0x2764370]
+18:44:15.041808320 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x27e52b8, param_value_size_ret: 0x0
+18:44:15.041808746 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_GPU]
+18:44:15.041808988 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_PARENT_DEVICE, param_value_size: 8, param_value: 0x7ffd833861b8, param_value_size_ret: 0x0
+18:44:15.041809337 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x0
+18:44:15.041809584 - lttng_ust_opencl:clRetainDevice_entry: device: 0x2764370
+18:44:15.041810004 - lttng_ust_opencl:clRetainDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.041810561 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_NAME, param_value_size: 0, param_value: 0x0, param_value_size_ret: 0x7ffd83386448
+18:44:15.041810864 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 28, param_value_vals: ""
+18:44:15.041811154 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_NAME, param_value_size: 28, param_value: 0x27e52e0, param_value_size_ret: 0x0
+18:44:15.041811409 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 28, param_value_vals: Intel(R) OpenCL HD Graphics
+18:44:15.041812040 - lttng_ust_opencl:clReleaseDevice_entry: device: 0x2764370
+18:44:15.041812533 - lttng_ust_opencl:clReleaseDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.041813433 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x2606588, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 0, devices: 0x0, num_devices: 0x7ffd8338644c
+18:44:15.041813839 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: []
+18:44:15.041814070 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x2606588, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 1, devices: 0x27e4ef0, num_devices: 0x0
+18:44:15.041815719 - lttng_ust_opencl_devices:device_name: device: 0x26073c8, name: Intel(R) Xeon(R) CPU E3-1585 v5 @ 3.50GHz
+18:44:15.041816986 - lttng_ust_opencl_devices:device_timer: device: 0x26073c8, device_timestamp: 761478806444365, host_timestamp: 761478806444278
+18:44:15.041817164 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: [0x26073c8]
+18:44:15.041817603 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x27e5358, param_value_size_ret: 0x0
+18:44:15.041818351 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_CPU]
+18:44:15.041818575 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_PARENT_DEVICE, param_value_size: 8, param_value: 0x7ffd833862c8, param_value_size_ret: 0x0
+18:44:15.041818893 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x0
+18:44:15.041819123 - lttng_ust_opencl:clRetainDevice_entry: device: 0x26073c8
+18:44:15.041819411 - lttng_ust_opencl:clRetainDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.041820081 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x27642a0, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 0, devices: 0x0, num_devices: 0x7ffd8338644c
+18:44:15.041820668 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: []
+18:44:15.041820897 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x27642a0, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 1, devices: 0x27e4be0, num_devices: 0x0
+18:44:15.041821629 - lttng_ust_opencl_devices:device_name: device: 0x2764370, name: Intel(R) Iris(TM) Pro Graphics P580 [0x193a]
+18:44:15.041823577 - lttng_ust_opencl_devices:device_timer: device: 0x2764370, device_timestamp: 3333677312783, host_timestamp: 761481842580979
+18:44:15.041823742 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: [0x2764370]
+18:44:15.041824182 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x27e5398, param_value_size_ret: 0x0
+18:44:15.041824455 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_GPU]
+18:44:15.041824656 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_PARENT_DEVICE, param_value_size: 8, param_value: 0x7ffd833862c8, param_value_size_ret: 0x0
+18:44:15.041824901 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x0
+18:44:15.041825107 - lttng_ust_opencl:clRetainDevice_entry: device: 0x2764370
+18:44:15.041825329 - lttng_ust_opencl:clRetainDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.041826946 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x7ffd833865f8, param_value_size_ret: 0x0
+18:44:15.041827730 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_CPU]
+18:44:15.041828515 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x7ffd83386628, param_value_size_ret: 0x0
+18:44:15.041829016 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_CPU]
+18:44:15.041829286 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x7ffd833865f8, param_value_size_ret: 0x0
+18:44:15.041829543 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_GPU]
+18:44:15.041829823 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x7ffd83386628, param_value_size_ret: 0x0
+18:44:15.041830043 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_GPU]
+18:44:15.041831025 - lttng_ust_opencl:clReleaseDevice_entry: device: 0x26073c8
+18:44:15.041831386 - lttng_ust_opencl:clReleaseDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.041835807 - lttng_ust_opencl:clCreateContext_entry: properties: 0, num_devices: 1, devices: 0x27e4f10, pfn_notify: 0x0, user_data: 0x0, errcode_ret: 0x7ffd83386574, properties_vals: [], devices_vals: [0x2764370]
+18:44:15.041841340 - lttng_ust_opencl:clCreateContext_exit: context: 0x27e5570, errcode_ret_val: CL_SUCCESS
+18:44:15.041842562 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_PLATFORM, param_value_size: 8, param_value: 0x7ffd833865c8, param_value_size_ret: 0x0
+18:44:15.041842843 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x27642a0
+18:44:15.041843096 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_VERSION, param_value_size: 0, param_value: 0x0, param_value_size_ret: 0x7ffd833865c0
+18:44:15.041843447 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 12, param_value_vals: ""
+18:44:15.041843946 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_VERSION, param_value_size: 12, param_value: 0x7ffd833865a9, param_value_size_ret: 0x0
+18:44:15.041844204 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 12, param_value_vals: OpenCL 3.0 
+18:44:15.041845104 - lttng_ust_opencl:clCreateCommandQueueWithProperties_entry: context: 0x27e5570, device: 0x2764370, properties: 0x7ffd833865d0, errcode_ret: 0x7ffd8338659c, properties_vals: [4243, 1, 0]
+18:44:15.041848305 - lttng_ust_opencl:clCreateCommandQueueWithProperties_exit: command_queue: 0x25f6a50, errcode_ret_val: CL_SUCCESS
+18:44:15.041855390 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x27e5570, param_name: CL_CONTEXT_NUM_DEVICES, param_value_size: 4, param_value: 0x7ffd8338672c, param_value_size_ret: 0x0
+18:44:15.041856145 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 4, param_value_vals: 1
+18:44:15.041856503 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x27e5570, param_name: CL_CONTEXT_DEVICES, param_value_size: 8, param_value: 0x27e4f10, param_value_size_ret: 0x0
+18:44:15.041857104 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [ 0x2764370 ]
+18:44:15.041857568 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_PLATFORM, param_value_size: 8, param_value: 0x7ffd83386730, param_value_size_ret: 0x0
+18:44:15.041857823 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x27642a0
+18:44:15.041861158 - lttng_ust_opencl:clGetExtensionFunctionAddressForPlatform_entry: platform: 0x27642a0, func_name: 0x7fda5d32fee0, func_name_val: clSharedMemAllocINTEL
+18:44:15.041967101 - lttng_ust_opencl:clGetExtensionFunctionAddressForPlatform_exit: _retval: 140575699400528
+18:44:15.041970386 - lttng_ust_opencl:clSharedMemAllocINTEL_entry: context: 0x27e5570, device: 0x2764370, properties: 0x0, size: 40, alignment: 0, errcode_ret: 0x7ffd83386770, properties_vals: []
+18:44:15.041978394 - lttng_ust_opencl:clSharedMemAllocINTEL_exit: _retval: 0x27e9000, errcode_ret_val: CL_SUCCESS
+18:44:15.041980680 - lttng_ust_opencl:clGetPlatformIDs_entry: num_entries: 0, platforms: 0x0, num_platforms: 0x7ffd833864cc
+18:44:15.041981101 - lttng_ust_opencl:clGetPlatformIDs_exit: errcode_ret_val: CL_SUCCESS, num_platforms_val: 2, platforms_vals: []
+18:44:15.041981518 - lttng_ust_opencl:clGetPlatformIDs_entry: num_entries: 2, platforms: 0x26076b0, num_platforms: 0x0
+18:44:15.041981760 - lttng_ust_opencl:clGetPlatformIDs_exit: errcode_ret_val: CL_SUCCESS, num_platforms_val: 0, platforms_vals: [0x2606588, 0x27642a0]
+18:44:15.041982370 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x2606588, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 0, devices: 0x0, num_devices: 0x7ffd8338633c
+18:44:15.041983174 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: []
+18:44:15.041983479 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x2606588, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 1, devices: 0x27e4bc0, num_devices: 0x0
+18:44:15.041986005 - lttng_ust_opencl_devices:device_name: device: 0x26073c8, name: Intel(R) Xeon(R) CPU E3-1585 v5 @ 3.50GHz
+18:44:15.041987794 - lttng_ust_opencl_devices:device_timer: device: 0x26073c8, device_timestamp: 761478806615119, host_timestamp: 761478806614979
+18:44:15.041988000 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: [0x26073c8]
+18:44:15.041988636 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x25f74d8, param_value_size_ret: 0x0
+18:44:15.041989500 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_CPU]
+18:44:15.041989774 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_PARENT_DEVICE, param_value_size: 8, param_value: 0x7ffd833861b8, param_value_size_ret: 0x0
+18:44:15.041990109 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x0
+18:44:15.041990428 - lttng_ust_opencl:clRetainDevice_entry: device: 0x26073c8
+18:44:15.041990948 - lttng_ust_opencl:clRetainDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.041991604 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x2606588, param_name: CL_PLATFORM_NAME, param_value_size: 0, param_value: 0x0, param_value_size_ret: 0x7ffd83386448
+18:44:15.041992435 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 16, param_value_vals: ""
+18:44:15.041992790 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x2606588, param_name: CL_PLATFORM_NAME, param_value_size: 16, param_value: 0x27e4bc0, param_value_size_ret: 0x0
+18:44:15.041993421 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 16, param_value_vals: Intel(R) OpenCL
+18:44:15.041994094 - lttng_ust_opencl:clReleaseDevice_entry: device: 0x26073c8
+18:44:15.041994589 - lttng_ust_opencl:clReleaseDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.041995026 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x27642a0, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 0, devices: 0x0, num_devices: 0x7ffd8338633c
+18:44:15.041995859 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: []
+18:44:15.041996121 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x27642a0, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 1, devices: 0x27e4bc0, num_devices: 0x0
+18:44:15.041996967 - lttng_ust_opencl_devices:device_name: device: 0x2764370, name: Intel(R) Iris(TM) Pro Graphics P580 [0x193a]
+18:44:15.041999507 - lttng_ust_opencl_devices:device_timer: device: 0x2764370, device_timestamp: 3333677487830, host_timestamp: 761481842756862
+18:44:15.041999680 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: [0x2764370]
+18:44:15.042000229 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_NAME, param_value_size: 0, param_value: 0x0, param_value_size_ret: 0x7ffd83386448
+18:44:15.042000504 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 28, param_value_vals: ""
+18:44:15.042000753 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_NAME, param_value_size: 28, param_value: 0x27e5310, param_value_size_ret: 0x0
+18:44:15.042000992 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 28, param_value_vals: Intel(R) OpenCL HD Graphics
+18:44:15.042001816 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x2606588, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 0, devices: 0x0, num_devices: 0x7ffd8338644c
+18:44:15.042002138 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: []
+18:44:15.042002347 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x2606588, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 1, devices: 0x25f74a0, num_devices: 0x0
+18:44:15.042003652 - lttng_ust_opencl_devices:device_name: device: 0x26073c8, name: Intel(R) Xeon(R) CPU E3-1585 v5 @ 3.50GHz
+18:44:15.042004733 - lttng_ust_opencl_devices:device_timer: device: 0x26073c8, device_timestamp: 761478806632131, host_timestamp: 761478806632096
+18:44:15.042004902 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: [0x26073c8]
+18:44:15.042005343 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x25f75d8, param_value_size_ret: 0x0
+18:44:15.042006061 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_CPU]
+18:44:15.042006293 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_PARENT_DEVICE, param_value_size: 8, param_value: 0x7ffd833862c8, param_value_size_ret: 0x0
+18:44:15.042006612 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x0
+18:44:15.042006846 - lttng_ust_opencl:clRetainDevice_entry: device: 0x26073c8
+18:44:15.042007111 - lttng_ust_opencl:clRetainDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.042007585 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x27642a0, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 0, devices: 0x0, num_devices: 0x7ffd8338644c
+18:44:15.042008129 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: []
+18:44:15.042008362 - lttng_ust_opencl:clGetDeviceIDs_entry: platform: 0x27642a0, device_type: [CL_DEVICE_TYPE_ALL], num_entries: 1, devices: 0x27e5720, num_devices: 0x0
+18:44:15.042009088 - lttng_ust_opencl_devices:device_name: device: 0x2764370, name: Intel(R) Iris(TM) Pro Graphics P580 [0x193a]
+18:44:15.042010963 - lttng_ust_opencl_devices:device_timer: device: 0x2764370, device_timestamp: 3333677499450, host_timestamp: 761481842768353
+18:44:15.042011140 - lttng_ust_opencl:clGetDeviceIDs_exit: errcode_ret_val: CL_SUCCESS, num_devices_val: 1, devices_vals: [0x2764370]
+18:44:15.042012183 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x7ffd833865f8, param_value_size_ret: 0x0
+18:44:15.042012858 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_CPU]
+18:44:15.042013174 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x26073c8, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x7ffd83386628, param_value_size_ret: 0x0
+18:44:15.042013664 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_CPU]
+18:44:15.042013908 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x7ffd833865f8, param_value_size_ret: 0x0
+18:44:15.042014187 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_GPU]
+18:44:15.042014442 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x7ffd83386628, param_value_size_ret: 0x0
+18:44:15.042014673 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_GPU]
+18:44:15.042015222 - lttng_ust_opencl:clReleaseDevice_entry: device: 0x26073c8
+18:44:15.042015593 - lttng_ust_opencl:clReleaseDevice_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.042016673 - lttng_ust_opencl:clCreateContext_entry: properties: 0, num_devices: 1, devices: 0x27e4bc0, pfn_notify: 0x0, user_data: 0x0, errcode_ret: 0x7ffd83386574, properties_vals: [], devices_vals: [0x2764370]
+18:44:15.042019545 - lttng_ust_opencl:clCreateContext_exit: context: 0x25f7940, errcode_ret_val: CL_SUCCESS
+18:44:15.042020162 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_PLATFORM, param_value_size: 8, param_value: 0x7ffd833865c8, param_value_size_ret: 0x0
+18:44:15.042020427 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x27642a0
+18:44:15.042020633 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_VERSION, param_value_size: 0, param_value: 0x0, param_value_size_ret: 0x7ffd833865c0
+18:44:15.042020965 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 12, param_value_vals: ""
+18:44:15.042021273 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_VERSION, param_value_size: 12, param_value: 0x7ffd833865a9, param_value_size_ret: 0x0
+18:44:15.042021512 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 12, param_value_vals: OpenCL 3.0 
+18:44:15.042021908 - lttng_ust_opencl:clCreateCommandQueueWithProperties_entry: context: 0x25f7940, device: 0x2764370, properties: 0x7ffd833865d0, errcode_ret: 0x7ffd8338659c, properties_vals: [4243, 1, 0]
+18:44:15.042023323 - lttng_ust_opencl:clCreateCommandQueueWithProperties_exit: command_queue: 0x25f7d00, errcode_ret_val: CL_SUCCESS
+18:44:15.042041368 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_TYPE, param_value_size: 8, param_value: 0x7ffd833858d0, param_value_size_ret: 0x0
+18:44:15.042041728 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [CL_DEVICE_TYPE_GPU]
+18:44:15.042043127 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_COMPILER_AVAILABLE, param_value_size: 4, param_value: 0x7ffd833858ac, param_value_size_ret: 0x0
+18:44:15.042043414 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 4, param_value_vals: CL_TRUE
+18:44:15.042044025 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_VERSION, param_value_size: 0, param_value: 0x0, param_value_size_ret: 0x7ffd83385878
+18:44:15.042044350 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 12, param_value_vals: ""
+18:44:15.042044652 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_VERSION, param_value_size: 12, param_value: 0x25f8450, param_value_size_ret: 0x0
+18:44:15.042044884 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 12, param_value_vals: OpenCL 3.0 
+18:44:15.042046029 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x25f7940, param_name: CL_CONTEXT_NUM_DEVICES, param_value_size: 4, param_value: 0x7ffd83385894, param_value_size_ret: 0x0
+18:44:15.042046463 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 4, param_value_vals: 1
+18:44:15.042046834 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x25f7940, param_name: CL_CONTEXT_DEVICES, param_value_size: 8, param_value: 0x25f8430, param_value_size_ret: 0x0
+18:44:15.042047470 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [ 0x2764370 ]
+18:44:15.042047676 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_PLATFORM, param_value_size: 8, param_value: 0x7ffd83385838, param_value_size_ret: 0x0
+18:44:15.042047904 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x27642a0
+18:44:15.042048092 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_VERSION, param_value_size: 0, param_value: 0x0, param_value_size_ret: 0x7ffd83385880
+18:44:15.042048334 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 12, param_value_vals: ""
+18:44:15.042048548 - lttng_ust_opencl:clGetPlatformInfo_entry: platform: 0x27642a0, param_name: CL_PLATFORM_VERSION, param_value_size: 12, param_value: 0x7ffd83385859, param_value_size_ret: 0x0
+18:44:15.042048778 - lttng_ust_opencl:clGetPlatformInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 12, param_value_vals: OpenCL 3.0 
+18:44:15.042049566 - lttng_ust_opencl:clCreateProgramWithIL_entry: context: 0x25f7940, il: 0x41a0e0, length: 1564, errcode_ret: 0x7ffd8338581c
+18:44:15.042053120 - lttng_ust_opencl:clCreateProgramWithIL_exit: program: 0x25f84a0, errcode_ret_val: CL_SUCCESS
+18:44:15.042055700 - lttng_ust_opencl:clBuildProgram_entry: program: 0x25f84a0, num_devices: 1, device_list: 0x27e5390, options: 0x7ffd83385940, pfn_notify: 0x0, user_data: 0x0, device_list_vals: [0x2764370], options_val: 
+18:44:15.134820727 - lttng_ust_opencl_build:infos: program: 0x25f84a0, device: 0x2764370, build_status: CL_BUILD_SUCCESS, build_options: , build_log: 
+18:44:15.134822765 - lttng_ust_opencl_build:infos_1_2: program: 0x25f84a0, device: 0x2764370, binary_type: CL_PROGRAM_BINARY_TYPE_EXECUTABLE
+18:44:15.134823377 - lttng_ust_opencl_build:infos_2_0: program: 0x25f84a0, device: 0x2764370, build_global_variable_total_size: 0
+18:44:15.134824018 - lttng_ust_opencl:clBuildProgram_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.134832625 - lttng_ust_opencl:clCreateKernel_entry: program: 0x25f84a0, kernel_name: 0x27e42b0, errcode_ret: 0x7ffd83385b14, kernel_name_val: _ZTSZ4mainEUlN2cl4sycl4itemILi1ELb1EEEE16_9
+18:44:15.134838629 - lttng_ust_opencl_arguments:kernel_info: kernel: 0x2f62cd0, function_name: _ZTSZ4mainEUlN2cl4sycl4itemILi1ELb1EEEE16_9, num_args: 1, context: 0x25f7940, program: 0x25f84a0, attibutes: 
+18:44:15.134839407 - lttng_ust_opencl:clCreateKernel_exit: kernel: 0x2f62cd0, errcode_ret_val: CL_SUCCESS
+18:44:15.134840556 - lttng_ust_opencl:clGetKernelInfo_entry: kernel: 0x2f62cd0, param_name: CL_KERNEL_CONTEXT, param_value_size: 8, param_value: 0x7ffd83385af0, param_value_size_ret: 0x0
+18:44:15.134841131 - lttng_ust_opencl:clGetKernelInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x25f7940
+18:44:15.134844488 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x25f7940, param_name: CL_CONTEXT_NUM_DEVICES, param_value_size: 4, param_value: 0x7ffd83385a9c, param_value_size_ret: 0x0
+18:44:15.134845410 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 4, param_value_vals: 1
+18:44:15.134846201 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x25f7940, param_name: CL_CONTEXT_DEVICES, param_value_size: 8, param_value: 0x25f8450, param_value_size_ret: 0x0
+18:44:15.134846543 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [ 0x2764370 ]
+18:44:15.134847564 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_PLATFORM, param_value_size: 8, param_value: 0x7ffd83385aa0, param_value_size_ret: 0x0
+18:44:15.134848222 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x27642a0
+18:44:15.134849260 - lttng_ust_opencl:clGetExtensionFunctionAddressForPlatform_entry: platform: 0x27642a0, func_name: 0x7fda5d32fea0, func_name_val: clHostMemAllocINTEL
+18:44:15.134854744 - lttng_ust_opencl:clGetExtensionFunctionAddressForPlatform_exit: _retval: 140575699394560
+18:44:15.134855444 - lttng_ust_opencl:clSetKernelExecInfo_entry: kernel: 0x2f62cd0, param_name: CL_KERNEL_EXEC_INFO_INDIRECT_HOST_ACCESS_INTEL, param_value_size: 4, param_value: 0x7ffd83385aec, param_value_vals: CL_TRUE
+18:44:15.134856320 - lttng_ust_opencl:clSetKernelExecInfo_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.134856818 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x25f7940, param_name: CL_CONTEXT_NUM_DEVICES, param_value_size: 4, param_value: 0x7ffd83385a9c, param_value_size_ret: 0x0
+18:44:15.134857054 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 4, param_value_vals: 1
+18:44:15.134857246 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x25f7940, param_name: CL_CONTEXT_DEVICES, param_value_size: 8, param_value: 0x25f8450, param_value_size_ret: 0x0
+18:44:15.134857545 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [ 0x2764370 ]
+18:44:15.134857717 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_PLATFORM, param_value_size: 8, param_value: 0x7ffd83385aa0, param_value_size_ret: 0x0
+18:44:15.134857924 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x27642a0
+18:44:15.134858149 - lttng_ust_opencl:clGetExtensionFunctionAddressForPlatform_entry: platform: 0x27642a0, func_name: 0x7fda5d32fec0, func_name_val: clDeviceMemAllocINTEL
+18:44:15.134860081 - lttng_ust_opencl:clGetExtensionFunctionAddressForPlatform_exit: _retval: 140575699401680
+18:44:15.134860349 - lttng_ust_opencl:clSetKernelExecInfo_entry: kernel: 0x2f62cd0, param_name: CL_KERNEL_EXEC_INFO_INDIRECT_DEVICE_ACCESS_INTEL, param_value_size: 4, param_value: 0x7ffd83385aec, param_value_vals: CL_TRUE
+18:44:15.134860631 - lttng_ust_opencl:clSetKernelExecInfo_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.134860854 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x25f7940, param_name: CL_CONTEXT_NUM_DEVICES, param_value_size: 4, param_value: 0x7ffd83385a9c, param_value_size_ret: 0x0
+18:44:15.134861048 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 4, param_value_vals: 1
+18:44:15.134861234 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x25f7940, param_name: CL_CONTEXT_DEVICES, param_value_size: 8, param_value: 0x25f8450, param_value_size_ret: 0x0
+18:44:15.134861518 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [ 0x2764370 ]
+18:44:15.134861677 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_PLATFORM, param_value_size: 8, param_value: 0x7ffd83385aa0, param_value_size_ret: 0x0
+18:44:15.134861855 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x27642a0
+18:44:15.134862000 - lttng_ust_opencl:clGetExtensionFunctionAddressForPlatform_entry: platform: 0x27642a0, func_name: 0x7fda5d32fee0, func_name_val: clSharedMemAllocINTEL
+18:44:15.134863548 - lttng_ust_opencl:clGetExtensionFunctionAddressForPlatform_exit: _retval: 140575699400528
+18:44:15.134863763 - lttng_ust_opencl:clSetKernelExecInfo_entry: kernel: 0x2f62cd0, param_name: CL_KERNEL_EXEC_INFO_INDIRECT_SHARED_ACCESS_INTEL, param_value_size: 4, param_value: 0x7ffd83385aec, param_value_vals: CL_TRUE
+18:44:15.134864030 - lttng_ust_opencl:clSetKernelExecInfo_exit: errcode_ret_val: CL_SUCCESS
+18:44:15.134864905 - lttng_ust_opencl:clGetKernelInfo_entry: kernel: 0x2f62cd0, param_name: CL_KERNEL_PROGRAM, param_value_size: 8, param_value: 0x7ffd83385de8, param_value_size_ret: 0x0
+18:44:15.134865141 - lttng_ust_opencl:clGetKernelInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x25f84a0
+18:44:15.134868517 - lttng_ust_opencl:clGetKernelInfo_entry: kernel: 0x2f62cd0, param_name: CL_KERNEL_CONTEXT, param_value_size: 8, param_value: 0x7ffd83385b28, param_value_size_ret: 0x0
+18:44:15.134868708 - lttng_ust_opencl:clGetKernelInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x25f7940
+18:44:15.134868955 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x25f7940, param_name: CL_CONTEXT_NUM_DEVICES, param_value_size: 4, param_value: 0x7ffd83385b0c, param_value_size_ret: 0x0
+18:44:15.134869133 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 4, param_value_vals: 1
+18:44:15.134869280 - lttng_ust_opencl:clGetContextInfo_entry: context: 0x25f7940, param_name: CL_CONTEXT_DEVICES, param_value_size: 8, param_value: 0x25f8450, param_value_size_ret: 0x0
+18:44:15.134869558 - lttng_ust_opencl:clGetContextInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: [ 0x2764370 ]
+18:44:15.134869729 - lttng_ust_opencl:clGetDeviceInfo_entry: device: 0x2764370, param_name: CL_DEVICE_PLATFORM, param_value_size: 8, param_value: 0x7ffd83385b30, param_value_size_ret: 0x0
+18:44:15.134869954 - lttng_ust_opencl:clGetDeviceInfo_exit: errcode_ret_val: CL_SUCCESS, param_value_size_ret_val: 8, param_value_vals: 0x27642a0
+18:44:15.134870126 - lttng_ust_opencl:clGetExtensionFunctionAddressForPlatform_entry: platform: 0x27642a0, func_name: 0x7fda5d32ff40, func_name_val: clSetKernelArgMemPointerINTEL
+18:44:15.134872329 - lttng_ust_opencl:clGetExtensionFunctionAddressForPlatform_exit: _retval: 140575699489552
+18:44:15.134873338 - lttng_ust_opencl:clSetKernelArgMemPointerINTEL_entry: kernel: 0x2f62cd0, arg_index: 0, arg_value: 0x27e9000
+18:44:15.134874318 - lttng_ust_opencl:clSetKernelArgMemPointerINTEL_exit: errcode_ret_val: CL_INVALID_ARG_VALUE
+== OpenCL == 
+API calls | 1 Hostnames | 1 Processes | 1 Threads
+
+                                    Name |     Time | Time(%) | Calls |  Average |      Min |      Max | Failed | 
+                          clBuildProgram |  92.77ms |  99.73% |     1 |  92.77ms |  92.77ms |  92.77ms |      0 | 
+clGetExtensionFunctionAddressForPlatform | 117.11us |   0.13% |     5 |  23.42us |   1.55us | 105.94us |      0 | 
+                          clGetDeviceIDs |  60.61us |   0.07% |    16 |   3.79us | 322.00ns |  24.09us |      0 | 
+                         clGetDeviceInfo |  12.54us |   0.01% |    30 | 418.00ns | 178.00ns |   1.11us |      0 | 
+                         clCreateContext |   8.40us |   0.01% |     2 |   4.20us |   2.87us |   5.53us |      0 | 
+                   clSharedMemAllocINTEL |   8.01us |   0.01% |     1 |   8.01us |   8.01us |   8.01us |      0 | 
+                          clCreateKernel |   6.78us |   0.01% |     1 |   6.78us |   6.78us |   6.78us |      0 | 
+                       clGetPlatformInfo |   6.53us |   0.01% |    16 | 408.00ns | 230.00ns |   1.11us |      0 | 
+                        clGetContextInfo |   5.16us |   0.01% |    12 | 429.00ns | 178.00ns | 922.00ns |      0 | 
+      clCreateCommandQueueWithProperties |   4.62us |   0.00% |     2 |   2.31us |   1.42us |   3.20us |      0 | 
+                        clGetPlatformIDs |   4.61us |   0.00% |     4 |   1.15us | 242.00ns |   3.21us |      0 | 
+                   clCreateProgramWithIL |   3.55us |   0.00% |     1 |   3.55us |   3.55us |   3.55us |      0 | 
+                          clRetainDevice |   2.75us |   0.00% |     6 | 458.00ns | 222.00ns |   1.03us |      0 | 
+                         clReleaseDevice |   2.62us |   0.00% |     5 | 524.00ns | 361.00ns | 904.00ns |      0 | 
+                     clSetKernelExecInfo |   1.43us |   0.00% |     3 | 475.00ns | 267.00ns | 876.00ns |      0 | 
+                         clGetKernelInfo |   1.00us |   0.00% |     3 | 334.00ns | 191.00ns | 575.00ns |      0 | 
+           clSetKernelArgMemPointerINTEL | 980.00ns |   0.00% |     1 | 980.00ns | 980.00ns | 980.00ns |      1 | 
+                                   Total |  93.02ms | 100.00% |   109 |                                       1 | 
