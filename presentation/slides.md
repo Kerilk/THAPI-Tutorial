@@ -233,8 +233,8 @@ Open source at: https://github.com/argonne-lcf/THAPI
 ## ...and a Collection of Tools to Parse your Traces
 
 ### Babeltrace 2
-
-> Babeltrace 2 is the reference parser implementation of the Common Trace Format (CTF), a very versatile trace format followed by various tracers and tools such as LTTng and barectf. The Babeltrace 2 CLI,library and its Python bindings can read and write CTF traces. 
+* "The Babeltrace 2 project offers a library with a C API, Python 3 bindings, and a command-line tool which makes it very easy for mere mortals to view, convert, transform, and analyze traces."
+* "Babeltrace 2 is also the reference parser implementation of the Common Trace Format (CTF), a very versatile trace format followed by various tracers and tools such as LTTng and barectf. The Babeltrace 2 library and its Python bindings can read and write CTF traces."
 
 ### Tools
  * Summary, timeline (experimental), pretty printing
