@@ -1,11 +1,11 @@
 ---
-title: 'Tracing Heterogeneous APIs (OpenCL, L0, CUDA) in a nutshell: billions of events with low overhead'
+title: 'Tracing Heterogeneous APIs (OpenCL, L0, CUDA, OpenMP)'
 author:
 - Brice Videau
 - Thomas Applencourt
 institute:
 - Argonne National Laboratory
-date: 14th April 2021
+date: 11th May 2022
 theme: Warsaw
 header-includes:
 - |
@@ -102,7 +102,7 @@ heterogeneous computing is the norm.
 
 :::
 ::: {.column width="45%"}
-### How to Introspect Those?
+### Why?
 
  * Analyze applications based on those models;
  * Understand application performances;
@@ -115,91 +115,75 @@ heterogeneous computing is the norm.
 :::
 ::::::::::::::
 
-# Low / High level Programming Models
+# Stack of Programming Models
 
-## Low / High level Programming Models
+## Stack of Programming Models
 
-First thing we can do is sort the programming models in three categories:
+Programming models can be grouped in three categories:
 
- * Low level: CUDA driver, OpenCL, ROCm, L0...
- * High level: Kokkos, Raja, SYCL, CUDA, OpenMP (intermediate level?)
- * Library Level: BLAS, LAPACK, FFT, Neural Networks, etc...
+ * API based: CUDA driver, OpenCL, ROCm, L0
+ * High level: Kokkos, Raja, SYCL, CUDA, OpenMP
+ * Library: BLAS, LAPACK, FFT, Neural Networks
 
-Library are based on the underlying low or high-level programming models
+Each may provide tracing capabilities:
+
+ * OpenMP{D,T} for OpenMP
+ * Layers for OpenCL, L0
+ * Callbacks for CUDA
+
+Note that API based programming model can be traced directly.
 
 ## Objective
 
-What can we do that would have an impact on as many layer of the stack as possible:
+Understand programming models implementation and usages. Example:
 
- * Application writing,
- * Application optimization,
- * Application modeling/simulation,
- * Application monitoring,
- * Node resource management,
- * Platform management.
+ * How programming models are implemented on top of each other?
+   - How OpenMP nowait are implemented in LLVM?
+ * How applications are using programming models?
+   - What is the maximum memory allocated by my program on the GPU?
 
-Focus on low-level programming models
+### Solution
 
-# Low-Level Programming Models
-
-## Model Centric Debugging / Tracing
-
-Low level programming models usually rely on APIs:
-
- * Traceable (library preloading);
- * Injectable;
- * Usually task based, with clear dependencies;
- * State is reconstructible, on the fly or post-mortem;
- * Enables verification;
- * and modeling.
-
-## Simulation
-
-Accurate tracing and accessible modeling of low level programming models and
-tasks allows for accurate simulation:
-
- * Scalability studies,
- * Performance extrapolation,
- * Performance debugging.
-
-## High-level Programming Models Introspection
-
-Low level programming models are windows into high-level programming models:
-
- * Debug high level programming models,
- * Optimization of high level programming model,
- * Could be used to override high level programming model's behavior.
-
-## Node Resource Management
-
-Live tracing of low level programming models can be used as input to solve control
-issues at the node level. Especially correlated with other kind of performance
-metric tracing.
-
- * Check progress/liveliness
- * Check appropriate utilization
- * Use as input for balancing power between Threads / Processes / Tasks / etc...
-
-## Platform Management
-
-Post mortem analysis of traces (and inputs?) of HPC applications can be used to make platform-wide decisions about resources allocations, driving:
-
- * Global power repartition between different applications,
- * Higher priority for efficient applications?
- * Anticipation of application power/resource usage allowing for better platform tuning (amount of cooling, application interferences avoiding)
+ * Trace as many programming models as possible
+   - Trace should capture as much context as possible, and be lightweight as possible
+ * Develop tools to analyze traces
 
 # THAPI: Tracing Heterogeneous APIs
+
+##  Programming-Model Centric Debugging / Tracing
+
+Traces should contain enough information to reconstruct the programming model state.
+
+Traces can be:
+
+ * Tallied to give high-level summary
+ * Used to generate flame-graphs
+ * Used to check valid usage of programming model
+   - Check for error code
+   - Correct synchronization
+   - API semantics
+ * Analyzed using dedicated tools
+ * Input for simulation frameworks
 
 ## THAPI GOALS
 
   * Programming-Model centric tracing
-    - For each events, all the arguments are saved,
-    - Semantic preserved.
-  * Flexible 
+    - Save arguments and results of each runtime entry points
+
+\tiny
+```babeltrace_opencl
+18:56:59.677295870 - arc03 - vpid: 37040, vtid: 37040
+   - lttng_ust_ze:zeKernelSetIndirectAccess_entry:
+      { hKernel: 0x0000000002cd2b20, flags: [ ZE_KERNEL_INDIRECT_ACCESS_FLAG_DEVICE ] }
+18:56:59.677296042 - arc03 - vpid: 37040, vtid: 37040
+   - lttng_ust_ze:zeKernelSetIndirectAccess_exit:
+      { zeResult: ZE_RESULT_SUCCESS }
+```
+
+  * Flexible
     - Fine granularity, you can enable/disable individual events tracing,
     - Trace can be read programmatically (C, Python, Ruby),
-    - We provide tools calibrated to our needs as starting-blocks. 
-
+    - We provide tools calibrated to our needs as starting-blocks.
   * Low/Reasonable overhead
 
 ## THAPI Consist in 2 bigs components
@@ -207,38 +191,19 @@ Post mortem analysis of traces (and inputs?) of HPC applications can be used to 
 Open source at: https://github.com/argonne-lcf/THAPI
 
   * The tracing of events
-    - For each runtime calls, dump their arguments
-    - Done via `LTTng`
-  * The parsing of the trace 
-    - Generate a summary, a pretty print, information for data-simulation...
-    - Done via `babeltrace`
-
-  By default the trace are dumped into disks.
-
-## THAPI is a Collection of Tracers...
-
-### Use low level tracing: Linux Tracing Toolkit Next Generation (LTTng):
-
- * Low Overhead
-    - In order of \~0.2µs per traced event
- * Binary format
- * Well maintained and established (used in industry leading data-centers)
+    - Use low level tracing: Linux Tracing Toolkit Next Generation (LTTng):
+       - Well maintained and established (used in industry leading data-centers)
+       - Binary format, about 0.2us overhead per tracepoint (in our case)
+    - Tracepoints are generated from APIs' headers
+  * The parsing of the trace
+    - Use Babeltrace2 library and tools (reference parser implementation of Common Trace Format)
+    - Pretty Printer, Tally, Timelime/Flamegraph, ...
 
 ### Supported APIs
 
- * OpenCL
- * Level Zero 
- * CUDA (WIP)
+ * OpenCL, Level Zero, Cuda Driver
+ * OMPT
 
-## ...and a Collection of Tools to Parse your Traces
-
-### Babeltrace 2
-* "The Babeltrace 2 project offers a library with a C API, Python 3 bindings, and a command-line tool which makes it very easy for mere mortals to view, convert, transform, and analyze traces."
-* "Babeltrace 2 is also the reference parser implementation of the Common Trace Format (CTF), a very versatile trace format followed by various tracers and tools such as LTTng and barectf. The Babeltrace 2 library and its Python bindings can read and write CTF traces."
-
-### Tools
- * Summary, timeline (experimental), pretty printing
- * Tools are developed in C, time to process an event is in order of \~2µs second per event
 
 ## THAPI Examples
 
@@ -331,7 +296,7 @@ Explicit memory trafic | 1 Hostnames | 1 Processes | 1 Threads
              zeMemAllocDevice | 262.29kB |  50.00% |     4 | 65.57kB | 72.00B | 131.07kB |
 zeCommandListAppendMemoryCopy | 262.29kB |  50.00% |     6 | 43.71kB |  8.00B | 131.07kB |
                         Total | 524.58kB | 100.00% |    10 |
-``` 
+```
 \normalsize
 
 ## HPC Centric
