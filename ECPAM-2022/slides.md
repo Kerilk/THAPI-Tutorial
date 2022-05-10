@@ -197,7 +197,7 @@ Open source at: https://github.com/argonne-lcf/THAPI
     - Tracepoints are generated from APIs' headers
   * The parsing of the trace
     - Use Babeltrace2 library and tools (reference parser implementation of Common Trace Format)
-    - Pretty Printer, Tally, Timelime/Flamegraph, ...
+    - Pretty Printer, Tally, Timeline/Flamegraph, ...
 
 ### Supported APIs
 
@@ -227,37 +227,32 @@ END PROGRAM target_teams_distribute_parallel_do
 ```
 \normalsize
 
-## THAPI Examples: `tracer_opencl.sh` & `babeltrace_opencl`
+## THAPI Examples: `iprof -t ./a.out`
 
 Wrapping the API entry points to be able to reconstruct the context.
 
 \tiny
 ```babeltrace_opencl
-> tracer_opencl.sh ./target_teams_distribute_parallel_do # Using OpenCL backend
-Traces will be output to /home/tapplencourt/lttng-traces/thapi-opencl-session-20210409-145006
+> ./iprof -t ./a.out
+  { thread_type: ompt_thread_initial, thread_data: 0x00007f5b0cf0ac48 }
+ompt_callback_target:
+  { kind: ompt_target, endpoint: ompt_scope_end, device_num: 0, task_data: 0x0000000000000000, 
+    target_id: 1, codeptr_ra: 0x00007f5b26fa47e0 }
 [...]
-> babeltrace_opencl /home/tapplencourt/lttng-traces/thapi-opencl-session-20210409-145006
-[...]
-cl:clCreateProgramWithIL_start: context: 0x2522780, il: 0x461ec0, length: 41996,
-                                errcode_ret: 0x7ffd9763f8cc
-cl:clCreateProgramWithIL_stop: program: 0x24ed980, errcode_ret_val: CL_SUCCESS
-cl:clBuildProgram_start: program: 0x24ed980, num_devices: 0, device_list: 0x0,
-                         options: 0x7ffd9763fdf0, pfn_notify: 0x0, user_data: 0x0,
-                         device_list_vals: [], options_val: ""
-cl_build:infos: program: 0x24ed980, device: 0x24394c0, build_status: CL_BUILD_SUCCESS,
-                build_options: "", build_log: ""
-cl_build:infos_1_2: program: 0x24ed980, device: 0x24394c0,
-                    binary_type: CL_PROGRAM_BINARY_TYPE_EXECUTABLE
-cl_build:infos_2_0: program: 0x24ed980, device: 0x24394c0,
-                    build_global_variable_total_size: 0
-cl:clBuildProgram_stop: errcode_ret_val: CL_SUCCESS
-cl:clCreateKernel_start: program: 0x24ed980, kernel_name: 0x24ee890, errcode_ret: 0x7ffd9763fe64,
-                         kernel_name_val: "__omp_offloading_801_1a0d014_MAIN___l9"
-cl_arguments:kernel_info: kernel: 0x24ed170,
-                          function_name: "__omp_offloading_801_1a0d014_MAIN___l9",
-                          num_args: 9, context: 0x2522780, program: 0x24ed980, attibutes: ""
-cl:clCreateKernel_stop: kernel: 0x24ed170, errcode_ret_val: CL_SUCCESS
-[...]
+ompt_callback_target_data_op_intel: 
+  { endpoint: ompt_scope_begin, target_id: 1, host_op_id: 7, optype: ompt_target_data_transfer_to_device, 
+    src_addr: 0x00007f5b20088280, src_device_num: -10, dest_addr: 0xffffc001ffd80000, 
+    dest_device_num: 0, bytes: 131072, codeptr_ra: 0x00007f5b26fa47e0 }
+clEnqueueMemcpyINTEL_entry: 
+  { command_queue: 0x181a540, blocking: CL_FALSE, 
+    dst_ptr: 0xffffc001ffd80000, src_ptr: 0x00007f5b20088280, size: 64, num_events_in_wait_list: 0, 
+    event_wait_list: 0x0, event: 0x7ffc4ac01378, event_wait_list_vals: [] }
+clEnqueueMemcpyINTEL_exit: 
+  { errcode_ret_val: CL_SUCCESS, event_val: 0x1dffb30 }
+ompt_callback_target_data_op_intel:
+  { endpoint: ompt_scope_end, target_id: 1, host_op_id: 7, optype: ompt_target_data_transfer_to_device,
+    src_addr: 0x00007f5b20088280, src_device_num: -10, dest_addr: 0xffffc001ffd80000, 
+    dest_device_num: 0, bytes: 131072, codeptr_ra: 0x00007f5b26fa47e0 }
 ```
 \normalsize
 
@@ -267,60 +262,65 @@ cl:clCreateKernel_stop: kernel: 0x24ed170, errcode_ret_val: CL_SUCCESS
 ```
 $iprof ./target_teams_distribute_parallel_do.out # Using Level0 backend
 Trace location: /home/tapplencourt/lttng-traces/iprof-20210408-204629
-API calls | 1 Hostnames | 1 Processes | 1 Threads
-                             Name |     Time | Time(%) | Calls |  Average |      Min |      Max | Fail |
-                   zeModuleCreate | 211.63ms |  90.48% |     1 | 211.63ms | 211.63ms | 211.63ms |    0 |
-zeCommandQueueExecuteCommandLists |   9.38ms |   4.01% |     7 |   1.34ms | 576.87us |   3.77ms |    0 |
-                 zeMemAllocDevice |   5.21ms |   2.23% |     4 |   1.30ms |   1.04ms |   1.44ms |    0 |
-    zeCommandListAppendMemoryCopy |   4.48ms |   1.92% |     6 | 747.19us | 449.65us |   1.52ms |    0 |
-        zeCommandQueueSynchronize |   1.52ms |   0.65% |     7 | 217.60us | 149.03us | 349.54us |    0 |
-               zeCommandListReset | 609.80us |   0.26% |     7 |  87.11us |   2.40us | 439.86us |    0 |
-             zeCommandQueueCreate | 218.66us |   0.09% |     1 | 218.66us | 218.66us | 218.66us |    0 |
-              zeCommandListCreate | 149.12us |   0.06% |     1 | 149.12us | 149.12us | 149.12us |    0 |
-  zeCommandListAppendLaunchKernel | 136.50us |   0.06% |     1 | 136.50us | 136.50us | 136.50us |    0 |
+BACKEND_OMP | 1 Hostnames | 1 Processes | 1 Threads |
+       Name |   Time | Time(%) | Calls | Average |    Min |    Max |
+ompt_target | 3.65ms | 100.00% |     1 |  3.65ms | 3.65ms | 3.65ms |
+      Total | 3.65ms | 100.00% |     1 |
+
+BACKEND_OMP_TARGET_OPERATIONS | 1 Hostnames | 1 Processes | 1 Threads |
+                                 Name |     Time | Time(%) | Calls |  Average |      Min |      Max |
+               ompt_target_data_alloc |   1.97ms |  54.19% |     4 | 491.63us |    847ns |   1.12ms |
+  ompt_target_data_transfer_to_device |   1.26ms |  34.63% |     5 | 251.37us | 112.60us | 460.90us |
+ompt_target_data_transfer_from_device | 250.76us |   6.91% |     1 | 250.76us | 250.76us | 250.76us |
+             ompt_target_submit_intel | 155.04us |   4.27% |     1 | 155.04us | 155.04us | 155.04us |
 [...]
-         zeModuleGetGlobalPointer |   1.30us |   0.00% |     1 |   1.30us |   1.30us |   1.30us |    1 |
-                  zeKernelDestroy |   1.29us |   0.00% |     1 |   1.29us |   1.29us |   1.29us |    0 |
-            zeKernelGetProperties |   1.13us |   0.00% |     1 |   1.13us |   1.13us |   1.13us |    0 |
-                            Total | 233.90ms | 100.00% |   113 |                                     1 |
+                                Total |   3.63ms | 100.00% |    11 |
 
-Device profiling | 1 Hostnames | 1 Processes | 1 Threads | 1 Device pointers
+BACKEND_ZE | 1 Hostnames | 1 Processes | 1 Threads |
+                               Name |     Time | Time(%) | Calls |  Average |      Min |      Max |
+                     zeModuleCreate | 846.26ms |  96.89% |     1 | 846.26ms | 846.26ms | 846.26ms |
+      zeCommandListAppendMemoryCopy |  10.73ms |   1.23% |    12 | 893.82us |  12.96us |   5.33ms | 
+[...]
+                              Total | 873.46ms | 100.00% |   117 |
+
+Device profiling | 1 Hostnames | 1 Processes | 1 Threads | 1 Devices |
                                   Name |     Time | Time(%) | Calls | Average |     Min |     Max |
-         zeCommandListAppendMemoryCopy | 177.60us |  56.86% |     6 | 29.60us | 22.56us | 38.56us |
-            zeCommandListAppendBarrier |  70.40us |  22.54% |     1 | 70.40us | 70.40us | 70.40us |
-__omp_offloading_801_1a0d014_MAIN___l9 |  64.32us |  20.59% |     1 | 64.32us | 64.32us | 64.32us |
-                                 Total | 312.32us | 100.00% |     8 |
+                      zeMemoryCopy(DM) |  64.48us |   7.14% |     1 | 64.48us | 64.48us | 64.48us |
+__omp_offloading_33_7d35e996_MAIN___l9 |  27.84us |   3.08% |     1 | 27.84us | 27.84us | 27.84us |
+[...]
+                                 Total | 902.72us | 100.00% |    13 |
 
-Explicit memory trafic | 1 Hostnames | 1 Processes | 1 Threads
-                         Name |     Byte | Byte(%) | Calls | Average |    Min |      Max |
-             zeMemAllocDevice | 262.29kB |  50.00% |     4 | 65.57kB | 72.00B | 131.07kB |
-zeCommandListAppendMemoryCopy | 262.29kB |  50.00% |     6 | 43.71kB |  8.00B | 131.07kB |
-                        Total | 524.58kB | 100.00% |    10 |
 ```
 \normalsize
+
+## Timeline visualization
+Use perfetto/chrome trace json format (like everybody else)
+
+![timeline](timeline.png)
+
+## Timeline visualization Perspective: using Protobuf
+
+>While duration events allow you to trace the function flow, they must be nested. It is not possible to have non-nested duration events for a given thread. If you need to have durations that do not nest property you should use Async events instead.
+
+- In GPU programming model that supports concurrent executions of kernels in one queues (L0, OpenCL), events
+may not be perfectly nested.
+- We need to use Async events that are not supported in the JSON format of perfetto.
+- We need to use the Protobuf Format (this will bring additional benefits)
+
 
 ## HPC Centric
 
  * Can mix backend in same apps
+ * Developed with Multi-process / Multi-thread / MultiGPU in mind (ongoing development)
 
-\scriptsize
-```bash
-babeltrace2 ~/iprof-20210409-150449 |& grep ust_ze | wc -l
-244
-babeltrace2 ~/iprof-20210409-150449 |& grep ust_opencl | wc -l
-53
-```
-
- * Developed with Multiprocess / Multithread / MultiGPU in mind
-
- ```
+ ```babeltrace_opencl
 iprof mpirun -n 2 ./a.out
  ```
 
- * Traced Event are configurable to adjust overhead
+ * Traced Event are configurable to adjust overhead and trace size (e.g. `iprof --mode minimal`)
 
 \tiny
-```
+```babeltrace_opencl
           Name |     Time | Time(%) |   Calls |  Average |      Min |      Max |
 clSetKernelArg |    3.82s |  20.40% | 6607872 | 578.00ns | 335.00ns |  45.94us |
 [...]
@@ -328,6 +328,18 @@ clSetKernelArg |    3.82s |  20.40% | 6607872 | 578.00ns | 335.00ns |  45.94us |
 ```
 \normalsize
 
+## Iprof is Just a Tool on top of THAPI
+
+ * Babeltrace2 is a plugin architecture 
+```babeltrace_opencl
+babeltrace2 --plugin-path=$libdir "$@" \
+            --component=filter.zeinterval.interval \
+            --component=filter.ompinterval.interval \
+            --component=sink.xprof.tally
+```
+ * iprof is just one way of analyzing the trace from THAPI
+ * Bindings for `babeltrace2` exist in Python, Ruby, ...
+ * So users can write their own plugins (e.g. OTF2 convertor, memory footprint tracker, ...)
 
 # Conclusion and Future Work
 
@@ -348,11 +360,13 @@ Deployment strategies and use-cases on HPC infrastructures:
 
  * Lightweight monitoring for continuous usage,
  * Enabling full tracing of distributed applications,
- * Develop specialized trace analysis tools.
- * Timeline support
- * CUDA summary
+ * Develop specialized trace analysis tools,
+ * Protobuf timeline support.
 
 More tracers:
 
  * ROCm / Hip
 
+## Question? / Collaboration opportunities
+
+- We are looking for a postdoc :) 
