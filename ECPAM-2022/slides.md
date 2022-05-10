@@ -1,8 +1,8 @@
 ---
 title: 'Tracing Heterogeneous APIs (OpenCL, L0, CUDA, OpenMP)'
 author:
-- Brice Videau
 - Thomas Applencourt
+- Brice Videau
 institute:
 - Argonne National Laboratory
 date: 11th May 2022

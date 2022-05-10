@@ -1,6 +1,6 @@
 {
 "traceEvents":[
-{"args":{"name":"arcticus15, pid 39484 |"},"name":"process_name","ph":"M","pid":0},
+{"args":{"name":"iris, pid 39484 |"},"name":"process_name","ph":"M","pid":0},
 {"dur":0.769,"name":"zeInit","ph":"X","pid":0,"tid":39484,"ts":0.0},
 {"dur":0.449,"name":"zeDriverGet","ph":"X","pid":0,"tid":39484,"ts":1.702},
 {"dur":0.23800000000000002,"name":"zeDriverGet","ph":"X","pid":0,"tid":39484,"ts":2.384},
@@ -36,7 +36,7 @@
 {"dur":1.325,"name":"zeCommandListClose","ph":"X","pid":0,"tid":39484,"ts":650844.354},
 {"dur":246.115,"name":"zeCommandQueueExecuteCommandLists","ph":"X","pid":0,"tid":39484,"ts":650846.511},
 {"dur":142.195,"name":"zeCommandQueueSynchronize","ph":"X","pid":0,"tid":39484,"ts":651093.736},
-{"args":{"name":"GPU arcticus15, pid 39484 | "},"name":"process_name","ph":"M","pid":1},
+{"args":{"name":"GPU iris, pid 39484 | "},"name":"process_name","ph":"M","pid":1},
 {"dur":51.68,"name":"zeMemoryCopy(SM)","ph":"X","pid":1,"tid":39484,"ts":651164.1730000001},
 {"dur":257.038,"name":"zeCommandListReset","ph":"X","pid":0,"tid":39484,"ts":651236.73},
 {"dur":1.3760000000000001,"name":"zeModuleGetGlobalPointer","ph":"X","pid":0,"tid":39484,"ts":651494.794},
