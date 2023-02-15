@@ -20,6 +20,120 @@ header-includes:
   ```
 ---
 
+# Context
+
+## Intro
+
+Programming languages and models for HPC have never been more diverse:
+
+:::::::::::::: {.columns}
+::: {.column width="35%"}
+### Languages
+
+ * FORTRAN
+ * C
+ * C++
+ * Python
+
+### Prospective languages
+
+ * Julia
+ * Lua
+ * Chapel
+ * PGAS approaches
+
+:::
+::: {.column width="65%"}
+### Programming models
+
+ * MPI
+ * OpenMP
+ * CUDA, L0, ROCm, HIP, OpenCL
+ * SYCL/DPC++
+ * Kokkos
+ * Raja
+
+### Domain Based Programming Models
+
+ * Linear algebra: BLAS/LAPACK
+ * FFTs: cuFFT, FFTWx, mkl FFT
+ * Low level AI: cuDNN, clDNN, Intel DNNL
+ * AI/ML: TensorFlow/Caffe/PyTorch
+
+:::
+::::::::::::::
+
+## Problematic
+
+This plethora of alternatives are entwined, especially since
+heterogeneous computing is the norm.
+
+:::::::::::::: {.columns}
+::: {.column width="55%"}
+### Possible Dependencies
+:::::::::::::: {.columns}
+::: {.column width="45%"}
+
+ * SYCL:
+   - HIP
+   - OpenCL
+   - L0
+ * OpenMP:
+   - OpenCL
+   - CUDA
+   - L0
+ * OpenCL:
+   - L0
+   - CUDA
+:::
+::: {.column width="50%"}
+ * HIP:
+   - CUDA
+   - OpenCL
+   - ROCm
+   - L0
+ * Kokkos
+   - OpenMP
+   - CUDA
+   - SYCL
+ * ...
+:::
+::::::::::::::
+
+:::
+::: {.column width="45%"}
+### Why?
+
+ * Analyze applications based on those models;
+ * Understand application performances;
+ * Understand interactions between applications / compilers / run-times / system / hardware;
+ * Influence/optimize application at any point:
+   - writing,
+   - optimization,
+   - execution.
+
+:::
+::::::::::::::
+
+# Stack of Programming Models
+
+## Stack of Programming Models
+
+Programming models can be grouped in three categories:
+
+ * API based: CUDA driver, OpenCL, ROCm, L0
+ * High level: Kokkos, Raja, SYCL, CUDA, OpenMP
+ * Library: BLAS, LAPACK, FFT, Neural Networks
+
+Each may provide tracing capabilities:
+
+ * OpenMP{D,T} for OpenMP
+ * Layers for OpenCL, L0
+ * Callbacks for CUDA
+ * Kokkos Tools
+
+Note that API based programming model can also be traced directly.
+
 ## Objective
 
 Understand programming models implementation and usages. Example:
@@ -33,7 +147,7 @@ Understand programming models implementation and usages. Example:
 
  * Trace as many programming models as possible
    - Trace should capture as much context as possible, and be lightweight as possible
- * Develop tools to analyze traces
+ * Develop tools to analyze traces (summary, timeline, etc...)
 
 ##  Programming-Model Centric Debugging / Tracing
 
