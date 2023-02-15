@@ -277,3 +277,16 @@ babeltrace2 --plugin-path=$libdir "$@" \
  * Deploying it on Polaris 
  * MPI api / HIP support
  * If you want to colaborate, don't hesitate!
+
+## Open to Collaborations
+
+ * Visualization of trace
+	- Multiple tools reimplements the same logic (perfetto tracing for example)
+	- Should we agree on a intermediate CTF format so we can share implemetation?
+ 	- This can help grow the echosystem (CTF -> HPC Toolkit binary format for example)
+
+ * For GPU Tracer in particular:
+	- We all to the same things (intercepting call, and  calling some call of callbacks)
+	- Maybe we can shre some infrastrucure
+
+ * How can we avoid code duplication / effort duplication ?
