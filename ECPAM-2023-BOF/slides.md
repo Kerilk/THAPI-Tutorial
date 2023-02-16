@@ -1,5 +1,7 @@
 ---
-title: 'Tracing Heterogeneous APIs (CUDA, OpenCL, L0, OpenMP)'
+title: 'Tracing Heterogeneous APIs (CUDA, OpenCL, L0, OpenMP). \
+Toward a General Tracing Framework?'
+
 author:
 - Thomas Applencourt
 - Brice Videau
@@ -148,6 +150,7 @@ Understand programming models implementation and usages. Example:
  * Trace as many programming models as possible
    - Trace should capture as much context as possible, and be lightweight as possible
  * Develop tools to analyze traces (summary, timeline, etc...)
+ * Modular code architecture (ease the implementation of new "front-end")
 
 # THAPI: Tracing Heterogeneous APIs
 
