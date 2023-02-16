@@ -149,7 +149,27 @@ Understand programming models implementation and usages. Example:
    - Trace should capture as much context as possible, and be lightweight as possible
  * Develop tools to analyze traces (summary, timeline, etc...)
 
+# THAPI: Tracing Heterogeneous APIs
+
 ##  Programming-Model Centric Debugging / Tracing
+
+Traces should contain enough information to reconstruct the programming model state.
+
+Traces can be:
+
+ * Tallied to give high-level summary
+ * Used to generate flame-graphs
+ * Used to check valid usage of programming model
+   - Check for error code
+   - Correct synchronization
+   - API semantics
+ * Analyzed using dedicated tools
+ * Input for simulation frameworks
+
+##  THAPI Principles
+
+ * Programming-Model centric tracing
+   - Save arguments and results of each runtime entry points
 
 \tiny
 ```babeltrace_opencl
@@ -173,11 +193,9 @@ Open source at: https://github.com/argonne-lcf/THAPI
 
   * The tracing of events
     - Use low level tracing: Linux Tracing Toolkit Next Generation (LTTng):
-       - Well maintained and established (used in industry leading data-centers)
-       - Binary format, about 0.2us overhead per tracepoint (in our case)
     - Tracepoints are generated from APIs' headers
   * The parsing of the trace
-    - Use Babeltrace2 library and tools (reference parser implementation of Common Trace Format)
+    - Use Babeltrace2 library and tools
     - Pretty Printer, Tally, Timeline/Flamegraph, ...
 
 ### Supported APIs
@@ -185,6 +203,32 @@ Open source at: https://github.com/argonne-lcf/THAPI
  * OpenCL, Level Zero, Cuda Driver
  * OMPT
 
+## LTTng
+
+State of the art tracing infrastructure for kernel and user-space.
+
+  * Well maintained and established (used in industry leading data-centers)
+  * Binary format (CTF: Common Trace Format) open standard
+  * About 0.2us overhead per tracepoint (in our case: blocking mode)
+    - can be relaxed if use case tolerate event losses
+  * LTTng relay daemons can be setup to stream over the network in complex topologies
+    - ideal to deploy at scale
+
+## Babeltrace 2
+
+New trace processing infrastructure
+
+  * reference parser implementation of Common Trace Format
+  * Modular plugin infrastructure
+    - Compose babeltrace components into trace processing graphs:
+      - Sources
+      - Filters
+      - Sinks
+  * Created tooling around Babeltrace2
+    - Bindings
+    - Event driven framework independent of Babeltrace API (Metababel)
+      - Separation of concern
+      - Easy plugin development
 
 ## THAPI Examples: `iprof -t ./a.out`
 
@@ -257,6 +301,29 @@ Use perfetto/chrome protobuf trace format
 
 ![timeline](timeline.png)
 
+## MPI aware: simple MPI run (and naive support)
+
+\tiny
+```
+$ mpirun -n 8 iprof --traced-ranks=-1 ./a.out
+Trace location: /home/applenco/lttng-traces/iprof-20230203-192322
+BACKEND_ZE | 2 Hostnames | 8 Processes | 8 Threads |
+
+                             Name |     Time | Time(%) | Calls |  Average |      Min |      Max |
+                   zeModuleCreate | 979.15ms |  88.13% |     8 | 122.39ms | 117.81ms | 128.13ms |
+             zeCommandListDestroy |  90.89ms |   8.18% |    16 |   5.68ms |  10.25us |  13.86ms |
+zeCommandQueueExecuteCommandLists |  11.84ms |   1.07% |     8 |   1.48ms |   1.06ms |   2.43ms |
+     zeCommandListCreateImmediate |  11.54ms |   1.04% |     8 |   1.44ms |   1.29ms |   1.66ms |
+              zeCommandListCreate |   3.14ms |   0.28% |     8 | 392.81us | 341.28us | 452.46us |
+[...]
+
+Device profiling | 2 Hostnames | 8 Processes | 8 Threads | 2 Devices |
+
+              Name |     Time | Time(%) | Calls | Average |     Min |      Max |
+main::{lambda()#1} | 619.04us | 100.00% |     8 | 77.38us | 54.40us | 223.20us |
+             Total | 619.04us | 100.00% |     8 |
+```
+
 ## Iprof is Just a Tool on top of THAPI
 
  * Babeltrace2 is a plugin architecture 
@@ -268,25 +335,40 @@ babeltrace2 --plugin-path=$libdir "$@" \
 ```
  * iprof is just one way of analyzing the trace from THAPI
  * Bindings for `babeltrace2` exist in Python, Ruby, ...
- * So users can write their own plugins (e.g. OTF2 convertor, memory footprint tracker, ...)
+ * So users can write their own plugins (e.g. OTF2 converter, memory footprint tracker, ...)
+
+# Perspectives
 
 ## Conclusion / Future Work
 
  * Trace all the runtime stack!
- * In the process of the `v1.0` release (big refractoring of the internal) 
+ * In the process of the `v1.0` release (big refactoring of the internal) 
  * Deploying it on Polaris 
- * MPI api / HIP support
- * If you want to colaborate, don't hesitate!
+ * MPI api / HIP and/or HSA support
+ * If you want to collaborate, don't hesitate!
+
+## Scaling on Aurora
+
+ * Platform wide monitoring
+   - Granularity? Kernel launches? Kernel times? Sampling?
+ * Aggregation/reduction trees
+   - Leveraging LTTng and Babeltrace2 streaming capabilities
+     - New Babeltrace2 plugins (network sink?)
+ * Storage issues?
+   - performance, capacity
+ * Trace processing time?
+   - Outside of Babeltrace2 usual use-cases
 
 ## Open to Collaborations
 
  * Visualization of trace
-	- Multiple tools reimplements the same logic (perfetto tracing for example)
-	- Should we agree on a intermediate CTF format so we can share implemetation?
- 	- This can help grow the echosystem (CTF -> HPC Toolkit binary format for example)
+   - Multiple tools reimplements the same logic (perfetto tracing for example)
+   - Should we agree on a intermediate CTF format so we can share implementation?
+     - Interval: name, type, origin, start time, duration
+   - This can help grow the ecosystem (CTF -> HPC Toolkit binary format for example)
 
- * For GPU Tracer in particular:
-	- We all to the same things (intercepting call, and  calling some call of callbacks)
-	- Maybe we can shre some infrastrucure
+ * For GPU tracing in particular:
+   - We all to the same things (intercepting call, and  calling some call of callbacks)
+   - Maybe we can share some infrastructure
 
  * How can we avoid code duplication / effort duplication ?
