@@ -374,3 +374,10 @@ babeltrace2 --plugin-path=$libdir "$@" \
    - Maybe we can share some infrastructure
 
  * How can we avoid code duplication / effort duplication ?
+
+## Acknowledgement
+
+This research was supported by the Exascale Computing Project (17-SC-20-SC), a collaborative effort of the U.S. Department of Energy (DOE) Office of Science and the National Nuclear Security Administration.
+
+This research used resources of the Argonne Leadership Computing Facility, which is a DOE Office of Science User Facility supported under Contract DE-AC02-06CH11357.
+
