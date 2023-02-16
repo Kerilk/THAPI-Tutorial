@@ -1,6 +1,5 @@
 ---
-title: 'Tracing Heterogeneous APIs (CUDA, OpenCL, L0, OpenMP). \
-Toward a General Tracing Framework?'
+title: 'Tracing Heterogeneous APIs (CUDA, OpenCL, L0, OpenMP): Toward a General Tracing Framework?'
 
 author:
 - Thomas Applencourt
