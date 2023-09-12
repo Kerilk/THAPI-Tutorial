@@ -2,11 +2,14 @@
 title: 'Tracing Heterogeneous Programing Models with LTTng and Babeltrace'
 
 author:
+- Aurelio A. Vivas Meza
+- Solomon Bekele
 - Thomas Applencourt
 - Brice Videau
+
 institute:
 - Argonne National Laboratory
-date: 25th Oct 2022
+date: 17th Sept 2023
 theme: Warsaw
 header-includes:
 - |
@@ -216,13 +219,14 @@ State of the art tracing infrastructure for kernel and user-space.
 
 ## Automatic LTTng Tracepoint Generation
 
-  * We're tracing all APIs entry points (OpenCL, CUDA, Level Zero,  HIP) or tracing callbacks (OMPT)
-    - Tracingi using interception library
+  * We trace all APIs entry points (OpenCL, CUDA, Level Zero,  HIP) or tracing callbacks (OMPT)
+    - Tracing using interception library
+    - We also support sampling of user-events
   * Tedious, error prone, and hard to maintain by hand
   * Automatic generation from headers or API description (OpenCL)
     - C99 parser => YAML intermediary representation
-    - YAML + user provided meta information + user provided tracepoints => wrapper functions + trace model
-    - Trace model => tracepoints
+    - YAML + user provided meta information + user provided tracepoints => wrapper functions + Trace Model
+    - Trace Model => tracepoints
 
 ## Example: cuDeviceGetCount
 
@@ -288,7 +292,7 @@ Trace output (pretty):
 
 ## Example: cuDeviceGetCount (Continued)
 
-Trace model:
+Trace Model:
 
 \tiny
 :::::::::::::: {.columns}
@@ -371,19 +375,87 @@ TRACEPOINT_EVENT(
 
 ## Babeltrace 2
 
-New trace processing infrastructure
-
-  * reference parser implementation of Common Trace Format
+  * Reference parser implementation of Common Trace Format
   * Modular plugin infrastructure
-    - Compose babeltrace components into trace processing graphs:
-      - Sources
-      - Filters
-      - Sinks
-  * Created tooling around Babeltrace2
-    - Bindings
-    - Event driven framework independent of Babeltrace API (Metababel)
-      - Separation of concern
-      - Easy plugin development
+  * Compose Babeltrace 2 components into trace processing graphs:
+    - Sources
+    - Filters
+    - Sinks
+
+\tiny
+```bash
+babeltrace2 --plugin-path=$libdir \
+            --component=filter.zeinterval.interval \
+            --component=filter.ompinterval.interval \
+            --component=sink.xprof.tally
+```
+\normalsize
+
+  * THAPI Pipeline of plugins
+    - Filters which aggregate messages
+    - Sinks which create outputs:
+      + Tally
+      + Pretty Print
+      + Timeline + Power monitoring
+  * Automatic Plugins generation for Babeltrace 2 from the Trace Model
+
+
+## Metababel
+
+  * Problem: Writing Babeltrace 2 plugin by hand is tedious, error prone and hard to maintain.
+    - Using Python bindings is too slow -> Use C or C++
+  * Main Idea: Attaching User-Callbacks to Trace Events
+  * Metababel generates Babeltrace 2 calls to read, write and dispatch events to User-Callbacks
+    - Generate State Machine to handle Babeltrace 2 messages queues
+  * Open Source: https://github.com/TApplencourt/metababel
+
+## Metababel Example
+
+Signature of callbacks for `cuDeviceGetCount_exit`:
+\tiny
+```C
+typedef void cuDeviceGetCount_exit_callback_t(void *btx_handle, CUresult cuResult, int count_val);
+```
+\normalsize
+Babeltrace 2 Code Generated (extract):
+\tiny
+```C
+CUresult cuResult;
+int count_val;
+const bt_field *payload_field = bt_event_borrow_payload_field_const(bt_evt);
+{
+  const bt_field *_field = NULL;
+  _field = bt_field_structure_borrow_member_field_by_index_const(payload_field, 0);
+  cuResult = (CUresult)bt_field_integer_signed_get_value(_field);
+}
+{
+  const bt_field *_field = NULL;
+  _field = bt_field_structure_borrow_member_field_by_index_const(payload_field, 1);
+  count_val = (int)bt_field_integer_signed_get_value(_field);
+}
+[...]
+```
+\normalsize
+Example of user code:
+\tiny
+```C
+#include <metababel/metababel.h>
+void cuDeviceGetCount_exit_callback(void *btx_handle, CUresult cuResult, int count_val) {
+  std::cout << "cuResult: " << cuResult << ", count_val: "  << count_val << std::endl;
+}
+void btx_register_usr_callbacks(void *btx_handle) {
+  btx_register_cuDeviceGetCount_exit(btx_handle, &cuDeviceGetCount_exit_callback);
+}
+```
+
+## Babeltrace 2 Ruby Binding
+
+  - Plugins need to be fasts
+  - But Bindings for fast prototyping or handling of Babeltrace 2 components graph is useful
+  - Python is quite painful to package on HPC system
+  - Developed Ruby Bindings (https://github.com/argonne-lcf/babeltrace2-ruby)
+
+# THAPI Showcase
 
 ## THAPI Examples: `iprof -t ./a.out`
 
@@ -456,53 +528,15 @@ Use perfetto/chrome protobuf trace format
 
 ![timeline](timeline.png)
 
-## MPI aware: simple MPI run (and naive support)
-
-\tiny
-```
-$ mpirun -n 8 iprof --traced-ranks=-1 ./a.out
-Trace location: /home/applenco/lttng-traces/iprof-20230203-192322
-BACKEND_ZE | 2 Hostnames | 8 Processes | 8 Threads |
-
-                             Name |     Time | Time(%) | Calls |  Average |      Min |      Max |
-                   zeModuleCreate | 979.15ms |  88.13% |     8 | 122.39ms | 117.81ms | 128.13ms |
-             zeCommandListDestroy |  90.89ms |   8.18% |    16 |   5.68ms |  10.25us |  13.86ms |
-zeCommandQueueExecuteCommandLists |  11.84ms |   1.07% |     8 |   1.48ms |   1.06ms |   2.43ms |
-     zeCommandListCreateImmediate |  11.54ms |   1.04% |     8 |   1.44ms |   1.29ms |   1.66ms |
-              zeCommandListCreate |   3.14ms |   0.28% |     8 | 392.81us | 341.28us | 452.46us |
-[...]
-
-Device profiling | 2 Hostnames | 8 Processes | 8 Threads | 2 Devices |
-
-              Name |     Time | Time(%) | Calls | Average |     Min |      Max |
-main::{lambda()#1} | 619.04us | 100.00% |     8 | 77.38us | 54.40us | 223.20us |
-             Total | 619.04us | 100.00% |     8 |
-```
-
-## Iprof is Just a Tool on top of THAPI
-
- * Babeltrace2 is a plugin architecture 
-```babeltrace_opencl
-babeltrace2 --plugin-path=$libdir "$@" \
-            --component=filter.zeinterval.interval \
-            --component=filter.ompinterval.interval \
-            --component=sink.xprof.tally
-```
- * iprof is just one way of analyzing the trace from THAPI
- * Bindings for `babeltrace2` exist in Python, Ruby, ...
- * So users can write their own plugins (e.g. OTF2 converter, memory footprint tracker, ...)
-
 # Perspectives
 
 ## Conclusion / Future Work
 
  * Trace all the runtime stack!
  * In the process of the `v1.0` release (big refactoring of the internal) 
- * Deploying it on Polaris 
- * MPI api / HIP and/or HSA support
- * If you want to collaborate, don't hesitate!
+ * MPI api / HSA support
 
-## Scaling on Aurora
+## Scaling on Exascale System (Aurora)
 
  * Platform wide monitoring
    - Granularity? Kernel launches? Kernel times? Sampling?
@@ -516,17 +550,13 @@ babeltrace2 --plugin-path=$libdir "$@" \
 
 ## Open to Collaborations
 
+ * Currently collaborating with Efficios to improve performance of LTTng / Babeltrace for our use case.
  * Visualization of trace
    - Multiple tools reimplements the same logic (perfetto tracing for example)
    - Should we agree on a intermediate CTF format so we can share implementation?
      - Interval: name, type, origin, start time, duration
    - This can help grow the ecosystem (CTF -> HPC Toolkit binary format for example)
-
- * For GPU tracing in particular:
-   - We all to the same things (intercepting call, and  calling some call of callbacks)
-   - Maybe we can share some infrastructure
-
- * How can we avoid code duplication / effort duplication ?
+  * Expend Metababel for more use-case
 
 ## Acknowledgement
 
