@@ -1,5 +1,5 @@
 ---
-title: 'Tracing Heterogeneous Programing Models with LTTng and Babeltrace'
+title: 'Tracing Heterogeneous Programming Models with LTTng and Babeltrace'
 
 author:
 - Aurelio A. Vivas Meza
@@ -542,20 +542,19 @@ Use perfetto/chrome protobuf trace format
    - Granularity? Kernel launches? Kernel times? Sampling?
  * Aggregation/reduction trees
    - Leveraging LTTng and Babeltrace2 streaming capabilities
-     - New Babeltrace2 plugins (network sink?)
- * Storage issues?
-   - performance, capacity
+     - New Babeltrace2 plugins (network filter?)
  * Trace processing time?
-   - Outside of Babeltrace2 usual use-cases
+   - Session Rotation
+   - Non blocking
 
 ## Open to Collaborations
 
- * Currently collaborating with Efficios to improve performance of LTTng / Babeltrace for our use case.
+ * Currently collaborating with EfficiOS to improve performance of LTTng / Babeltrace for our use case.
  * Visualization of trace
-   - Multiple tools reimplements the same logic (perfetto tracing for example)
+   - Multiple tools reimplements the same logic (perfetto, TraceCompass, HPC Tooking for example)
    - Should we agree on a intermediate CTF format so we can share implementation?
      - Interval: name, type, origin, start time, duration
-   - This can help grow the ecosystem (CTF -> HPC Toolkit binary format for example)
+   - This can help grow the ecosystem
   * Expend Metababel for more use-case
 
 ## Acknowledgement
