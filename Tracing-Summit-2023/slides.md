@@ -551,7 +551,7 @@ Use perfetto/chrome protobuf trace format
 
  * Currently collaborating with EfficiOS to improve performance of LTTng / Babeltrace for our use case.
  * Visualization of trace
-   - Multiple tools reimplements the same logic (perfetto, TraceCompass, HPC Tooking for example)
+   - Multiple tools reimplements the same logic (perfetto, TraceCompass, HPC Toolkit for example)
    - Should we agree on a intermediate CTF format so we can share implementation?
      - Interval: name, type, origin, start time, duration
    - This can help grow the ecosystem
