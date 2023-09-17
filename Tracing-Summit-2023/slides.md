@@ -228,7 +228,7 @@ State of the art tracing infrastructure for kernel and user-space.
     - YAML + user provided meta information + user provided tracepoints => wrapper functions + Trace Model
     - Trace Model => tracepoints
 
-## Example: cuDeviceGetCount
+## CUresult cuDeviceGetCount(int* count)
 
 :::::::::::::: {.columns}
 ::: {.column width="50%"}
